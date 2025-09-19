@@ -338,23 +338,45 @@
     <!-- Footer -->
     <footer class="border-t border-white/10">
         <div class="max-w-7xl mx-auto px-6 py-10 lg:px-10">
-            <!-- Navigation Links -->
-            <nav class="text-center mb-8" aria-label="Footer Navigation">
-                <!-- Mobile: 2 columns, Desktop: horizontal -->
-                <div class="grid grid-cols-2 gap-y-3 gap-x-4 sm:flex sm:flex-wrap sm:justify-center sm:gap-x-8 sm:gap-y-0">
-                    <a href="index.html#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center sm:justify-start">How It Works</a>
-                    <a href="index.html#features" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center sm:justify-start">Piggy Bong AI</a>
-                    <a href="index.html#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center sm:justify-start">Plans</a>
-                    <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center sm:justify-start">Contact</a>
-                    <span class="text-gray-400 text-sm font-medium min-h-[44px] flex items-center justify-center sm:justify-start cursor-default">Privacy Policy</span>
-                    <a href="terms.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center sm:justify-start">Terms of Service</a>
+            <!-- Mobile Layout: Stacked -->
+            <div class="block lg:hidden">
+                <!-- Navigation Links -->
+                <nav class="text-center mb-8" aria-label="Footer Navigation">
+                    <div class="grid grid-cols-2 gap-y-3 gap-x-4">
+                        <a href="index.html#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">How It Works</a>
+                        <a href="index.html#features" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">Piggy Bong AI</a>
+                        <a href="index.html#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">Plans</a>
+                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">Contact</a>
+                        <span class="text-gray-400 text-sm font-medium min-h-[44px] flex items-center justify-center cursor-default">Privacy Policy</span>
+                        <a href="terms.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">Terms of Service</a>
+                    </div>
+                </nav>
+                <!-- Download App Button -->
+                <div class="text-center mb-8">
+                    <a href="index.html#plans"
+                       class="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-semibold hover:bg-white/20 transition-all duration-200 min-h-[44px]"
+                       aria-label="Download Piggy Bong App">
+                        Download App
+                    </a>
                 </div>
-            </nav>
+            </div>
 
-            <!-- Download App Button -->
-            <div class="text-center mb-8">
+            <!-- Desktop Layout: Left/Right -->
+            <div class="hidden lg:flex lg:items-center lg:justify-between mb-8">
+                <!-- Left: Navigation Links -->
+                <nav aria-label="Footer Navigation">
+                    <div class="flex flex-wrap gap-x-8">
+                        <a href="index.html#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">How It Works</a>
+                        <a href="index.html#features" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">Piggy Bong AI</a>
+                        <a href="index.html#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">Plans</a>
+                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">Contact</a>
+                        <span class="text-gray-400 text-sm font-medium cursor-default">Privacy Policy</span>
+                        <a href="terms.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">Terms of Service</a>
+                    </div>
+                </nav>
+                <!-- Right: Download App Button -->
                 <a href="index.html#plans"
-                   class="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-xl font-semibold hover:bg-white/20 transition-all duration-200 min-h-[44px]"
+                   class="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-semibold hover:bg-white/20 transition-all duration-200 min-h-[44px]"
                    aria-label="Download Piggy Bong App">
                     Download App
                 </a>
