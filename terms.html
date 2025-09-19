@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms of Service - Piggy Bong</title>
+    <link rel="icon" type="image/png" href="fav-icon.png">
+    <link rel="shortcut icon" type="image/png" href="fav-icon.png">
+    <link rel="apple-touch-icon" href="fav-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,6 +27,7 @@
         }
     </script>
     <style>
+        /* Optimized unified gradient background */
         html {
             scroll-behavior: smooth;
             margin: 0;
@@ -33,10 +37,20 @@
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
         }
+
         body {
             font-family: 'Nunito', sans-serif;
             font-size: clamp(0.875rem, 2vw, 1rem);
-            background: linear-gradient(180deg, #0D0011 0%, #362239 20%, #1A0B2E 40%, #362239 60%, #1A0B2E 80%, #0D0011 100%);
+            /* Multi-stop vertical gradient for smooth flow */
+            background: linear-gradient(180deg,
+                #0D0011 0%,     /* Deep purple start */
+                #362239 15%,    /* Mid purple */
+                #1A0B2E 35%,    /* Dark purple-blue */
+                #2D1B3D 50%,    /* New mid tone */
+                #1A0B2E 65%,    /* Dark purple-blue */
+                #362239 85%,    /* Mid purple return */
+                #0D0011 100%    /* Deep purple end */
+            );
             background-attachment: fixed;
             background-size: 100% 100%;
             background-repeat: no-repeat;
@@ -52,6 +66,19 @@
             overscroll-behavior: none;
             width: 100%;
             max-width: 100vw;
+        }
+
+        /* Enhanced glass cards */
+        .card-glass {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Remove section backgrounds */
+        footer, header, section, nav {
+            background: none !important;
         }
 
         /* Ensure all containers respect viewport width */
@@ -87,11 +114,6 @@
             max-width: min(90vw, 1024px);
             margin: 0 auto;
             padding: clamp(1rem, 3vw, 2rem);
-        }
-        .card-glass {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
         }
         .contact-gradient {
             background: linear-gradient(135deg, #5D2CEE 0%, #8B55ED 100%);
