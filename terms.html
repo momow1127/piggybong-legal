@@ -98,6 +98,32 @@
             line-height: 1.3 !important;
         }
 
+        /* Responsive Text Utilities */
+        .text-responsive-card-title {
+            font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+            line-height: 1.2;
+        }
+
+        .text-responsive-card-desc {
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            line-height: 1.5;
+        }
+
+        .text-responsive-subtitle {
+            font-size: clamp(0.95rem, 2.5vw, 1.125rem);
+            line-height: 1.4;
+        }
+
+        .text-responsive-footer {
+            font-size: clamp(0.8rem, 1.5vw, 0.875rem);
+            line-height: 1.4;
+        }
+
+        .text-responsive-body {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            line-height: 1.6;
+        }
+
         h3 {
             font-size: clamp(1rem, 2.5vw + 0.1rem, 1.5rem);
             line-height: 1.3;
@@ -191,7 +217,7 @@
             <!-- Header -->
             <div class="text-center mb-8 sm:mb-12">
                 <h1 class="font-bold text-white mb-4">Terms of Service</h1>
-                <p class="text-gray-300">Last updated: August 29, 2025</p>
+                <p class="text-gray-300 text-responsive-subtitle">Last updated: August 29, 2025</p>
             </div>
 
             <!-- Important Notice -->
@@ -206,8 +232,8 @@
                 <!-- Acceptance of Terms -->
                 <section class="card-glass p-6 lg:p-8 rounded-2xl">
                     <h2 class="text-2xl font-semibold text-white mb-4 ">1. Acceptance of Terms</h2>
-                    <p class="text-gray-300 mb-4">These Terms of Service ("Terms") constitute a legally binding agreement between you ("User," "you," or "your") and the developer of Piggy Bong ("we," "us," "our," or "Developer") regarding your use of the Piggy Bong mobile application ("App," "Service," or "Piggy Bong").</p>
-                    <p class="text-gray-300">By accessing or using Piggy Bong, you acknowledge that you have read, understood, and agree to be bound by these Terms and our Privacy Policy. These Terms apply to all users of the App.</p>
+                    <p class="text-gray-300 text-responsive-body mb-4">These Terms of Service ("Terms") constitute a legally binding agreement between you ("User," "you," or "your") and the developer of Piggy Bong ("we," "us," "our," or "Developer") regarding your use of the Piggy Bong mobile application ("App," "Service," or "Piggy Bong").</p>
+                    <p class="text-gray-300 text-responsive-body">By accessing or using Piggy Bong, you acknowledge that you have read, understood, and agree to be bound by these Terms and our Privacy Policy. These Terms apply to all users of the App.</p>
                 </section>
 
                 <!-- Description of Service -->
@@ -215,7 +241,7 @@
                     <h2 class="text-2xl font-semibold text-white mb-4 ">2. Description of Service</h2>
 
                     <h3 class="text-xl font-medium text-white mb-3">2.1 Piggy Bong Overview</h3>
-                    <p class="text-gray-300 mb-4">Piggy Bong is a K-pop fan spending tracker mobile application designed to help users:</p>
+                    <p class="text-gray-300 text-responsive-body mb-4">Piggy Bong is a K-pop fan spending tracker mobile application designed to help users:</p>
                     <ul class="list-disc list-inside text-gray-300 space-y-2 mb-6">
                         <li>Track spending on K-pop related purchases (concerts, albums, merchandise)</li>
                         <li>Set and manage budgets for different spending categories</li>
@@ -227,11 +253,11 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <h3 class="text-xl font-medium text-white mb-3">2.2 Service Availability</h3>
-                            <p class="text-gray-300">Piggy Bong is currently available for iOS devices through the Apple App Store. The App requires an internet connection for full functionality and uses Supabase as our backend service provider.</p>
+                            <p class="text-gray-300 text-responsive-body">Piggy Bong is currently available for iOS devices through the Apple App Store. The App requires an internet connection for full functionality and uses Supabase as our backend service provider.</p>
                         </div>
                         <div>
                             <h3 class="text-xl font-medium text-white mb-3">2.3 Service Modifications</h3>
-                            <p class="text-gray-300">We reserve the right to modify, update, or discontinue the App at any time, with or without notice. We may also impose limits on certain features or restrict access to parts of the App.</p>
+                            <p class="text-gray-300 text-responsive-body">We reserve the right to modify, update, or discontinue the App at any time, with or without notice. We may also impose limits on certain features or restrict access to parts of the App.</p>
                         </div>
                     </div>
                 </section>

@@ -87,6 +87,50 @@
             max-width: 100%;
         }
 
+        /* Enhanced Sticky Navigation - Cross-browser compatibility */
+        .navbar-sticky {
+            position: sticky;
+            position: -webkit-sticky; /* Safari fallback */
+            top: 0;
+            z-index: 9999; /* Ensure it's above all content */
+            /* Prevent layout shifts on sticky activation */
+            will-change: transform;
+            /* Force hardware acceleration for smooth scrolling */
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            /* Ensure backdrop blur works on all browsers */
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+        }
+
+        /* iOS Safari specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .navbar-sticky {
+                /* Force iOS to respect sticky positioning */
+                position: -webkit-sticky;
+                position: sticky;
+                /* Prevent iOS Safari sticky issues */
+                transform: translate3d(0, 0, 0);
+                -webkit-transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* Prevent content jumping when navbar becomes sticky */
+        .navbar-container {
+            position: relative;
+            z-index: 9999;
+        }
+
+        /* Smooth scrolling for anchor links - works with sticky nav */
+        html {
+            scroll-padding-top: 100px; /* Account for navbar height */
+        }
+
+        /* Ensure content doesn't hide behind sticky navbar */
+        section, main {
+            scroll-margin-top: 100px;
+        }
+
         /* Fluid Responsive Typography - Scales smoothly across all devices */
         h1 {
             font-size: clamp(2.25rem, 6vw + 0.5rem, 4.5rem) !important;
@@ -106,6 +150,35 @@
         p {
             font-size: clamp(0.9rem, 2.5vw + 0.1rem, 1.25rem);
             line-height: clamp(1.5, 0.5vw + 1.4, 1.7);
+        }
+
+        /* Responsive Text Utilities */
+        .text-responsive-card-title {
+            font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+            line-height: 1.2;
+        }
+
+        .text-responsive-card-desc {
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            line-height: 1.5;
+        }
+
+        .text-responsive-subtitle {
+            font-size: clamp(0.95rem, 2.5vw, 1.125rem);
+            line-height: 1.4;
+        }
+
+        .text-responsive-footer {
+            font-size: clamp(0.8rem, 1.5vw, 0.875rem);
+            line-height: 1.4;
+        }
+
+        .text-responsive-price {
+            font-size: clamp(1.5rem, 4vw, 1.875rem);
+        }
+
+        .text-responsive-price-suffix {
+            font-size: clamp(0.875rem, 2vw, 1rem);
         }
 
 
@@ -159,18 +232,12 @@
                 transform: rotate(2deg) translateY(-2px);
             }
         }
-        .menu-open #menu-panel {
-            transform: translateY(0);
-        }
-        .menu-closed #menu-panel {
-            transform: translateY(-100%);
-        }
     </style>
 </head>
 <body class="text-white font-nunito">
     <!-- Navigation Bar -->
-    <nav class="sticky top-0 z-50 bg-black/20 backdrop-blur-lg border-b border-white/10 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="navbar-sticky navbar-container bg-black/20 border-b border-white/10 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div class="flex justify-between items-center py-5 min-h-[80px]">
                 <!-- Logo with Icon -->
                 <a href="#hero" class="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200">
@@ -205,39 +272,30 @@
                         </svg>
                     </button>
                 </div>
-
             </div>
 
-            <!-- Mobile Menu Overlay -->
-            <div id="mobile-menu" class="fixed inset-0 z-50 md:hidden hidden">
-                <!-- Background overlay -->
-                <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="menu-overlay"></div>
-
-                <!-- Menu Panel -->
-                <div id="menu-panel" class="absolute top-0 right-0 w-full sm:w-96 h-[80vh] transform translate-y-0 transition-transform duration-300 ease-out">
-                    <div class="relative h-full bg-[#1A0E2A]/95 backdrop-blur-lg rounded-t-3xl shadow-2xl overflow-hidden">
-                        <!-- Background lightstick icon -->
-                        <img src="nav-icon.svg" alt="" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-auto opacity-5 pointer-events-none" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
-
-                        <!-- Close button -->
-                        <button id="mobile-menu-close" class="absolute top-6 right-6 text-white/80 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors duration-200">
+            <!-- Mobile Dropdown Menu -->
+            <div id="mobile-menu" class="absolute top-full left-0 w-full z-[10000] md:hidden hidden">
+                <div class="bg-[#1A0E2A] border border-white/10 rounded-b-lg shadow-2xl mx-4">
+                    <!-- Close button -->
+                    <div class="flex justify-end p-4">
+                        <button id="mobile-menu-close" class="text-white/80 hover:text-white p-3 rounded-full hover:bg-white/10 transition-colors duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
-
-                        <!-- Menu content -->
-                        <div class="relative z-10 h-full flex flex-col p-6 pt-16">
-                            <!-- Menu items -->
-                            <nav class="flex-1 space-y-5">
-                                <a href="#" class="block text-white text-lg font-medium hover:text-gray-100 transition-colors duration-200 py-2">Home</a>
-                                <a href="#how-it-works" class="block text-white text-lg font-medium hover:text-gray-100 transition-colors duration-200 py-2">How It Works</a>
-                                <a href="#plans" class="block text-white text-lg font-medium hover:text-gray-100 transition-colors duration-200 py-2">Features</a>
-                                <a href="mailto:hello@piggybong.com" class="block text-white text-lg font-medium hover:text-gray-100 transition-colors duration-200 py-2">Contact Us</a>
-                                <a href="#plans" class="inline-block bg-white/20 backdrop-blur-sm border border-white/30 text-white px-6 py-3 rounded-full font-medium hover:bg-white/30 transition-colors duration-200">Download iOS</a>
-                            </nav>
-                        </div>
                     </div>
+
+                    <!-- Menu content -->
+                    <nav class="px-4 pb-6 space-y-4">
+                        <a href="#" class="block text-white text-lg font-medium hover:text-gray-100 transition-colors duration-200 py-3 px-2">Home</a>
+                        <a href="#how-it-works" class="block text-white text-lg font-medium hover:text-gray-100 transition-colors duration-200 py-3 px-2">How It Works</a>
+                        <a href="#plans" class="block text-white text-lg font-medium hover:text-gray-100 transition-colors duration-200 py-3 px-2">Features</a>
+                        <a href="mailto:hello@piggybong.com" class="block text-white text-lg font-medium hover:text-gray-100 transition-colors duration-200 py-3 px-2">Contact Us</a>
+                        <div class="pt-2">
+                            <a href="#plans" class="inline-block bg-white/20 border border-white/30 text-white px-6 py-3 rounded-full font-medium hover:bg-white/30 transition-colors duration-200 min-h-[44px] text-center w-full">Download iOS</a>
+                        </div>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -273,7 +331,7 @@
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-8 lg:mb-12">
                 <h2 class="font-bold text-white mb-4">How It Works</h2>
-                <p class="text-gray-300 max-w-2xl mx-auto">Simple steps to manage your K-pop spending</p>
+                <p class="text-gray-300 text-responsive-subtitle max-w-2xl mx-auto">Simple steps to manage your K-pop spending</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
                 <!-- Card 1 -->
@@ -281,24 +339,24 @@
                     <div class="mb-4 lg:mb-6">
                         <img src="tracking.svg" alt="Set Your Priorities" class="w-10 h-10 lg:w-12 lg:h-12">
                     </div>
-                    <h3 class="font-bold text-2xl text-white mb-3 lg:mb-4">Set Your Priorities</h3>
-                    <p class="text-base text-gray-300">Focus on what matters most like albums, concerts, or merch</p>
+                    <h3 class="font-bold text-responsive-card-title text-white mb-3 lg:mb-4">Set Your Priorities</h3>
+                    <p class="text-responsive-card-desc text-gray-300">Focus on what matters most like albums, concerts, or merch</p>
                 </div>
                 <!-- Card 2 -->
                 <div class="card-glass p-4 lg:p-6 rounded-2xl text-left">
                     <div class="mb-4 lg:mb-6">
                         <img src="ai.svg" alt="AI-Powered Insights" class="w-10 h-10 lg:w-12 lg:h-12">
                     </div>
-                    <h3 class="font-bold text-2xl text-white mb-3 lg:mb-4">AI-Powered Insights</h3>
-                    <p class="text-base text-gray-300">Personalized tips based on your fandom behavior</p>
+                    <h3 class="font-bold text-responsive-card-title text-white mb-3 lg:mb-4">AI-Powered Insights</h3>
+                    <p class="text-responsive-card-desc text-gray-300">Personalized tips based on your fandom behavior</p>
                 </div>
                 <!-- Card 3 -->
                 <div class="card-glass p-4 lg:p-6 rounded-2xl text-left">
                     <div class="mb-4 lg:mb-6">
                         <img src="calendar.svg" alt="Event Reminders" class="w-10 h-10 lg:w-12 lg:h-12">
                     </div>
-                    <h3 class="font-bold text-2xl text-white mb-3 lg:mb-4">Event Reminders</h3>
-                    <p class="text-base text-gray-300">Never miss a comeback or concert again</p>
+                    <h3 class="font-bold text-responsive-card-title text-white mb-3 lg:mb-4">Event Reminders</h3>
+                    <p class="text-responsive-card-desc text-gray-300">Never miss a comeback or concert again</p>
                 </div>
             </div>
         </div>
@@ -309,19 +367,19 @@
         <div class="container-responsive max-w-4xl">
             <div class="text-center mb-8 lg:mb-12">
                 <h2 class="font-bold text-white mb-4">Plans</h2>
-                <p class="text-gray-300 max-w-2xl mx-auto">Choose the perfect plan for your K-pop journey</p>
+                <p class="text-gray-300 text-responsive-subtitle max-w-2xl mx-auto">Choose the perfect plan for your K-pop journey</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                 <!-- Free Plan -->
                 <div class="card-glass p-4 lg:p-6 rounded-2xl flex flex-col">
-                    <h3 class="font-bold text-2xl text-white mb-2">Free Plan</h3>
-                    <p class="text-2xl lg:text-3xl font-bold text-white mb-6">$0<span class="text-base lg:text-lg font-normal text-gray-300">/month</span></p>
+                    <h3 class="font-bold text-responsive-card-title text-white mb-2">Free Plan</h3>
+                    <p class="text-responsive-price font-bold text-white mb-6">$0<span class="text-responsive-price-suffix font-normal text-gray-300">/month</span></p>
                     <ul class="space-y-3 mb-6 lg:mb-8 flex-grow">
-                        <li class="text-base text-gray-300 flex items-center gap-2">
+                        <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
                             <img src="circle-check.svg" alt="Check" class="w-5 h-5 flex-shrink-0">
                             <span>Track up to 3 artists</span>
                         </li>
-                        <li class="text-base text-gray-300 flex items-center gap-2">
+                        <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
                             <img src="circle-check.svg" alt="Check" class="w-5 h-5 flex-shrink-0">
                             <span>Manual spending logs</span>
                         </li>
@@ -330,18 +388,18 @@
                 </div>
                 <!-- VIP Plan -->
                 <div class="card-glass p-4 lg:p-6 rounded-2xl ring-2 ring-primary flex flex-col">
-                    <h3 class="font-bold text-2xl text-white mb-2">VIP Plan</h3>
-                    <p class="text-2xl lg:text-3xl font-bold text-white mb-6">$2.99<span class="text-base lg:text-lg font-normal text-gray-300">/month</span></p>
+                    <h3 class="font-bold text-responsive-card-title text-white mb-2">VIP Plan</h3>
+                    <p class="text-responsive-price font-bold text-white mb-6">$2.99<span class="text-responsive-price-suffix font-normal text-gray-300">/month</span></p>
                     <ul class="space-y-3 mb-6 lg:mb-8 flex-grow">
-                        <li class="text-base text-gray-300 flex items-center gap-2">
+                        <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
                             <img src="circle-check.svg" alt="Check" class="w-5 h-5 flex-shrink-0">
                             <span>Track up to 6 artists</span>
                         </li>
-                        <li class="text-base text-gray-300 flex items-center gap-2">
+                        <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
                             <img src="circle-check.svg" alt="Check" class="w-5 h-5 flex-shrink-0">
                             <span>Full AI insights</span>
                         </li>
-                        <li class="text-base text-gray-300 flex items-center gap-2">
+                        <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
                             <img src="circle-check.svg" alt="Check" class="w-5 h-5 flex-shrink-0">
                             <span>Priority event alerts</span>
                         </li>
@@ -360,11 +418,11 @@
                 <!-- Navigation Links -->
                 <nav class="text-center mb-8" aria-label="Footer Navigation">
                     <div class="grid grid-cols-2 gap-y-3 gap-x-4">
-                        <a href="#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">How It Works</a>
-                        <a href="#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">Plans</a>
-                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">Contact</a>
-                        <a href="privacy.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">Privacy Policy</a>
-                        <a href="terms.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">Terms of Service</a>
+                        <a href="#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">How It Works</a>
+                        <a href="#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Plans</a>
+                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Contact</a>
+                        <a href="privacy.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Privacy Policy</a>
+                        <a href="terms.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Terms of Service</a>
                     </div>
                 </nav>
                 <!-- Download iOS Button -->
@@ -382,11 +440,11 @@
                 <!-- Left: Navigation Links -->
                 <nav aria-label="Footer Navigation">
                     <div class="flex flex-wrap gap-x-8">
-                        <a href="#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">How It Works</a>
-                        <a href="#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">Plans</a>
-                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">Contact</a>
-                        <a href="privacy.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">Privacy Policy</a>
-                        <a href="terms.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">Terms of Service</a>
+                        <a href="#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium">How It Works</a>
+                        <a href="#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium">Plans</a>
+                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium">Contact</a>
+                        <a href="privacy.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium">Privacy Policy</a>
+                        <a href="terms.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium">Terms of Service</a>
                     </div>
                 </nav>
                 <!-- Right: Download iOS Button -->
@@ -399,71 +457,64 @@
 
             <!-- Copyright -->
             <div class="text-center">
-                <p class="text-white/60 text-sm">© 2025 Piggy Bong All Rights Reserved.</p>
+                <p class="text-white/60 text-responsive-footer">© 2025 Piggy Bong All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- Mobile Menu JavaScript -->
     <script>
-        // Mobile menu toggle functionality
+        // Simple mobile menu toggle functionality
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        const menuPanel = document.getElementById('menu-panel');
-        const menuOverlay = document.getElementById('menu-overlay');
         const menuCloseButton = document.getElementById('mobile-menu-close');
         let isMenuOpen = false;
 
-        function openMenu() {
-            isMenuOpen = true;
-            mobileMenu.classList.remove('hidden');
-            mobileMenu.classList.add('menu-open');
-            mobileMenu.classList.remove('menu-closed');
-            // Trigger animation
-            setTimeout(() => {
-                menuPanel.style.transform = 'translateY(0)';
-            }, 10);
-            mobileMenuButton.setAttribute('aria-expanded', 'true');
-            document.body.style.overflow = 'hidden'; // Prevent scroll when menu is open
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            }
         }
 
         function closeMenu() {
-            isMenuOpen = false;
-            menuPanel.style.transform = 'translateY(-100%)';
-            mobileMenu.classList.add('menu-closed');
-            mobileMenu.classList.remove('menu-open');
-            setTimeout(() => {
+            if (isMenuOpen) {
+                isMenuOpen = false;
                 mobileMenu.classList.add('hidden');
-            }, 300);
-            mobileMenuButton.setAttribute('aria-expanded', 'false');
-            document.body.style.overflow = ''; // Restore scroll
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            }
         }
 
-        // Open menu when hamburger is clicked
-        mobileMenuButton.addEventListener('click', function() {
-            if (isMenuOpen) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
-        });
+        // Toggle menu when hamburger button is clicked
+        mobileMenuButton.addEventListener('click', toggleMenu);
 
         // Close menu when close button is clicked
         menuCloseButton.addEventListener('click', closeMenu);
 
-        // Close menu when overlay is clicked
-        menuOverlay.addEventListener('click', closeMenu);
-
-        // Close mobile menu when clicking on a link
-        const mobileMenuLinks = mobileMenu.querySelectorAll('nav a, div a');
+        // Close menu when clicking on any navigation link
+        const mobileMenuLinks = mobileMenu.querySelectorAll('nav a');
         mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                closeMenu();
-            });
+            link.addEventListener('click', closeMenu);
         });
 
-        // Initialize menu in closed state
-        menuPanel.style.transform = 'translateY(-100%)';
+        // Close menu when clicking outside of it
+        document.addEventListener('click', function(event) {
+            if (isMenuOpen && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+                closeMenu();
+            }
+        });
+
+        // Close menu when pressing Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && isMenuOpen) {
+                closeMenu();
+            }
+        });
     </script>
 </body>
 </html>

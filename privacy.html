@@ -98,6 +98,32 @@
             line-height: 1.3 !important;
         }
 
+        /* Responsive Text Utilities */
+        .text-responsive-card-title {
+            font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+            line-height: 1.2;
+        }
+
+        .text-responsive-card-desc {
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            line-height: 1.5;
+        }
+
+        .text-responsive-subtitle {
+            font-size: clamp(0.95rem, 2.5vw, 1.125rem);
+            line-height: 1.4;
+        }
+
+        .text-responsive-footer {
+            font-size: clamp(0.8rem, 1.5vw, 0.875rem);
+            line-height: 1.4;
+        }
+
+        .text-responsive-body {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            line-height: 1.6;
+        }
+
         h3 {
             font-size: clamp(1rem, 2.5vw + 0.1rem, 1.5rem);
             line-height: 1.3;
@@ -191,7 +217,7 @@
             <!-- Header -->
             <div class="text-center mb-8 sm:mb-12">
                 <h1 class="font-bold text-white mb-4">Privacy Policy</h1>
-                <p class="text-gray-300">Last updated: August 29, 2025</p>
+                <p class="text-gray-300 text-responsive-subtitle">Last updated: August 29, 2025</p>
             </div>
 
             <!-- Content Sections -->
@@ -199,7 +225,7 @@
                 <!-- Introduction -->
                 <section class="card-glass p-6 lg:p-8 rounded-2xl">
                     <h2 class="text-2xl font-semibold text-white mb-4">1. Introduction</h2>
-                    <p class="text-gray-300">This Privacy Policy describes how Piggy Bong ("we," "our," or "us") collects, uses, and protects your information when you use our K-pop fan spending tracker mobile application (the "App"). We are committed to protecting your privacy and being transparent about our data practices.</p>
+                    <p class="text-gray-300 text-responsive-body">This Privacy Policy describes how Piggy Bong ("we," "our," or "us") collects, uses, and protects your information when you use our K-pop fan spending tracker mobile application (the "App"). We are committed to protecting your privacy and being transparent about our data practices.</p>
                 </section>
 
                 <!-- Information We Collect -->
@@ -224,7 +250,7 @@
                     </ul>
 
                     <h3 class="text-xl font-medium text-white mb-3">2.3 Third-Party Service Data</h3>
-                    <p class="text-gray-300">We use Supabase as our backend service provider, which may collect additional technical information for service provision and security purposes.</p>
+                    <p class="text-gray-300 text-responsive-body">We use Supabase as our backend service provider, which may collect additional technical information for service provision and security purposes.</p>
                 </section>
 
                 <!-- How We Use Your Information -->
@@ -327,7 +353,7 @@
                 <!-- Contact Section -->
                 <section class="card-glass p-6 lg:p-8 rounded-2xl">
                     <h2 class="text-2xl font-semibold text-white mb-4">11. Contact Information</h2>
-                    <p class="text-gray-300 mb-8">If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
+                    <p class="text-gray-300 text-responsive-body mb-8">If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
 
                     <div class="contact-gradient p-6 rounded-xl text-white mb-8">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -361,10 +387,10 @@
                         </div>
                     </div>
 
-                    <p class="text-gray-300 mt-8 text-left"><strong>Effective Date:</strong> This Privacy Policy is effective as of August 29, 2025.</p>
+                    <p class="text-gray-300 text-responsive-body mt-8 text-left"><strong>Effective Date:</strong> This Privacy Policy is effective as of August 29, 2025.</p>
 
                     <div class="mt-6 text-center">
-                        <p class="text-gray-300 font-semibold text-lg">
+                        <p class="text-gray-300 text-responsive-subtitle font-semibold">
                             <strong>Thank you for using Piggy Bong!</strong> We're committed to protecting your data while helping you track your K-pop spending.
                         </p>
                     </div>
