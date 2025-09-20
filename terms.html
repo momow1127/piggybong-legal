@@ -286,6 +286,129 @@
             align-items: center;
             justify-content: center;
         }
+
+        /* Enhanced Sticky Navigation - Cross-browser compatibility */
+        .navbar-sticky {
+            position: sticky;
+            position: -webkit-sticky; /* Safari fallback */
+            top: 0;
+            z-index: 9999; /* Ensure it's above all content */
+            /* Prevent layout shifts on sticky activation */
+            will-change: transform;
+            /* Force hardware acceleration for smooth scrolling */
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            /* Ensure backdrop blur works on all browsers */
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+        }
+
+        /* iOS Safari specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .navbar-sticky {
+                /* Force iOS to respect sticky positioning */
+                position: -webkit-sticky;
+                position: sticky;
+                /* Prevent iOS Safari sticky issues */
+                transform: translate3d(0, 0, 0);
+                -webkit-transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* Prevent content jumping when navbar becomes sticky */
+        .navbar-container {
+            position: relative;
+            z-index: 9999;
+        }
+
+        /* Full Screen Mobile Menu Styles */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* Use the same background as the page */
+            background: linear-gradient(180deg,
+                #0D0011 0%,
+                #362239 15%,
+                #1A0B2E 35%,
+                #2D1B3D 50%,
+                #1A0B2E 65%,
+                #362239 85%,
+                #0D0011 100%
+            );
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active .mobile-menu-content {
+            transform: translateY(0);
+        }
+
+        /* Hamburger to X transformation */
+        .hamburger-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-line {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: currentColor;
+            border-radius: 1px;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-line:nth-child(1) {
+            top: 6px;
+        }
+
+        .hamburger-line:nth-child(2) {
+            top: 11px;
+        }
+
+        .hamburger-line:nth-child(3) {
+            top: 16px;
+        }
+
+        /* Transform to X when active */
+        .hamburger-icon.active .hamburger-line:nth-child(1) {
+            top: 11px;
+            transform: rotate(45deg);
+        }
+
+        .hamburger-icon.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-icon.active .hamburger-line:nth-child(3) {
+            top: 11px;
+            transform: rotate(-45deg);
+        }
     </style>
 </head>
 <body class="text-white font-nunito">
@@ -293,24 +416,62 @@
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <!-- Navigation Bar -->
-    <nav class="sticky top-0 z-50 bg-black/20 backdrop-blur-lg border-b border-white/10 shadow-lg" role="navigation" aria-label="Primary navigation">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="navbar-sticky navbar-container bg-black/20 border-b border-white/10 shadow-lg" role="navigation" aria-label="Primary navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div class="flex justify-between items-center py-5 min-h-[80px]">
                 <!-- Logo with Icon -->
-                <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity duration-200">
+                <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200">
                     <img src="nav-icon.svg" alt="Piggy Bong Logo" class="h-8 w-auto sm:h-10 lg:h-12 object-contain" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
                     <span class="font-bold text-xl text-white">Piggy Bong</span>
                 </a>
 
-                <!-- Back to Home with proper spacing -->
-                <div class="ml-6 lg:ml-8">
-                    <a href="index.html" class="btn-responsive bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 focus:bg-white/40" aria-label="Navigate back to home page">
-                        Back to Home
-                    </a>
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center gap-6">
+                    <div class="flex items-center gap-6">
+                        <a href="index.html#how-it-works" class="text-white hover:text-gray-100 transition-colors duration-200 py-2">How It Works</a>
+                        <a href="index.html#plans" class="text-white hover:text-gray-100 transition-colors duration-200 py-2">Features</a>
+                        <a href="index.html#plans" class="text-white hover:text-gray-100 transition-colors duration-200 py-2">Plans</a>
+                        <a href="terms.html" class="text-white hover:text-gray-100 transition-colors duration-200 py-2" aria-current="page">Terms of Service</a>
+                    </div>
+
+                    <!-- Back to Home Button -->
+                    <div class="ml-6 lg:ml-8">
+                        <a href="index.html" class="btn-responsive bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 focus:bg-white/40" aria-label="Navigate back to home page">Back to Home</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button
+                        id="mobile-menu-button"
+                        class="btn-icon text-white hover:bg-white/10 focus:bg-white/20"
+                        aria-label="Open mobile navigation menu"
+                        aria-expanded="false"
+                    >
+                        <div class="hamburger-icon" id="hamburger-icon">
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- Full Screen Mobile Menu Overlay -->
+    <div id="mobile-menu" class="mobile-menu-overlay md:hidden">
+        <div class="mobile-menu-content">
+            <nav class="text-center space-y-6">
+                <a href="index.html" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Home</a>
+                <a href="index.html#how-it-works" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">How It Works</a>
+                <a href="index.html#plans" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Features</a>
+                <a href="mailto:hello@piggybong.com" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Contact Us</a>
+                <a href="privacy.html" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Privacy Policy</a>
+                <a href="terms.html" class="block text-purple-300 text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center" aria-current="page">Terms of Service</a>
+            </nav>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <main id="main-content" tabindex="-1" class="min-h-screen py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
@@ -639,5 +800,78 @@
             </div>
         </div>
     </footer>
+
+    <!-- Mobile Menu JavaScript -->
+    <script>
+        // Enhanced mobile menu functionality with full-screen overlay
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+
+            if (isMenuOpen) {
+                // Open menu
+                mobileMenu.classList.add('active');
+                hamburgerIcon.classList.add('active');
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+                mobileMenuButton.setAttribute('aria-label', 'Close mobile navigation menu');
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Close menu
+                mobileMenu.classList.remove('active');
+                hamburgerIcon.classList.remove('active');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                mobileMenuButton.setAttribute('aria-label', 'Open mobile navigation menu');
+                // Restore body scroll
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeMenu() {
+            if (isMenuOpen) {
+                isMenuOpen = false;
+                mobileMenu.classList.remove('active');
+                hamburgerIcon.classList.remove('active');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                mobileMenuButton.setAttribute('aria-label', 'Open mobile navigation menu');
+                // Restore body scroll
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Toggle menu when hamburger button is clicked
+        mobileMenuButton.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking on any navigation link
+        const mobileMenuLinks = mobileMenu.querySelectorAll('nav a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Close menu when clicking on the overlay background (outside the nav content)
+        mobileMenu.addEventListener('click', function(event) {
+            if (event.target === mobileMenu) {
+                closeMenu();
+            }
+        });
+
+        // Close menu when pressing Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && isMenuOpen) {
+                closeMenu();
+            }
+        });
+
+        // Prevent body scroll bounce on iOS when menu is open
+        mobileMenu.addEventListener('touchmove', function(event) {
+            if (isMenuOpen) {
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>

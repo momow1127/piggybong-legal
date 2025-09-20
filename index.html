@@ -240,6 +240,95 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
+        /* Full Screen Mobile Menu Styles */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* Use the same background as the page */
+            background: linear-gradient(180deg,
+                #0D0011 0%,
+                #362239 15%,
+                #1A0B2E 35%,
+                #2D1B3D 50%,
+                #1A0B2E 65%,
+                #362239 85%,
+                #0D0011 100%
+            );
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active .mobile-menu-content {
+            transform: translateY(0);
+        }
+
+        /* Hamburger to X transformation */
+        .hamburger-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-line {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: currentColor;
+            border-radius: 1px;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-line:nth-child(1) {
+            top: 6px;
+        }
+
+        .hamburger-line:nth-child(2) {
+            top: 11px;
+        }
+
+        .hamburger-line:nth-child(3) {
+            top: 16px;
+        }
+
+        /* Transform to X when active */
+        .hamburger-icon.active .hamburger-line:nth-child(1) {
+            top: 11px;
+            transform: rotate(45deg);
+        }
+
+        .hamburger-icon.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-icon.active .hamburger-line:nth-child(3) {
+            top: 11px;
+            transform: rotate(-45deg);
+        }
+
         /* Mobile-first responsive containers */
         .container-responsive {
             width: 100%;
@@ -310,39 +399,48 @@
                         aria-label="Open mobile navigation menu"
                         aria-expanded="false"
                     >
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
+                        <div class="hamburger-icon" id="hamburger-icon">
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                        </div>
                     </button>
                 </div>
             </div>
 
-            <!-- Mobile Dropdown Menu -->
-            <div id="mobile-menu" class="absolute top-full left-0 w-full z-[10000] md:hidden hidden">
-                <div class="bg-[#1A0E2A] border border-white/10 rounded-b-lg shadow-2xl mx-4">
-                    <!-- Close button -->
-                    <div class="flex justify-end p-4">
-                        <button id="mobile-menu-close" class="btn-icon text-white/80 hover:text-white hover:bg-white/10 focus:bg-white/20" aria-label="Close mobile navigation menu">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <!-- Menu content -->
-                    <nav class="px-4 pb-6 space-y-4">
-                        <a href="#" class="block text-white text-responsive-card-title font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 px-2 min-h-[44px] flex items-center">Home</a>
-                        <a href="#how-it-works" class="block text-white text-responsive-card-title font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 px-2 min-h-[44px] flex items-center">How It Works</a>
-                        <a href="#plans" class="block text-white text-responsive-card-title font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 px-2 min-h-[44px] flex items-center">Features</a>
-                        <a href="mailto:hello@piggybong.com" class="block text-white text-responsive-card-title font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 px-2 min-h-[44px] flex items-center">Contact Us</a>
-                        <div class="pt-2">
-                            <a href="#plans" class="btn-responsive bg-white/20 border border-white/30 text-white hover:bg-white/30 focus:bg-white/40 w-full" aria-label="Download Piggy Bong iOS app">Download iOS</a>
-                        </div>
-                    </nav>
-                </div>
-            </div>
         </div>
     </nav>
+
+    <!-- Full Screen Mobile Menu Overlay -->
+    <div id="mobile-menu" class="mobile-menu-overlay md:hidden">
+        <div class="mobile-menu-content">
+            <nav class="text-center space-y-6">
+                <a href="#" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Home</a>
+                <a href="#how-it-works" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">How It Works</a>
+                <a href="#plans" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Features</a>
+                <a href="mailto:hello@piggybong.com" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Contact Us</a>
+                <div class="pt-4">
+                    <a href="#plans" class="btn-large bg-white/20 border border-white/30 text-white hover:bg-white/30 focus:bg-white/40" aria-label="Download Piggy Bong iOS app">Download iOS</a>
+                </div>
+            </nav>
+        </div>
+        </div>
+    </nav>
+
+    <!-- Full Screen Mobile Menu Overlay -->
+    <div id="mobile-menu" class="mobile-menu-overlay md:hidden">
+        <div class="mobile-menu-content">
+            <nav class="text-center space-y-6">
+                <a href="#" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Home</a>
+                <a href="#how-it-works" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">How It Works</a>
+                <a href="#plans" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Features</a>
+                <a href="mailto:hello@piggybong.com" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Contact Us</a>
+                <div class="pt-4">
+                    <a href="#plans" class="btn-large bg-white/20 border border-white/30 text-white hover:bg-white/30 focus:bg-white/40" aria-label="Download Piggy Bong iOS app">Download iOS</a>
+                </div>
+            </nav>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section id="hero" class="py-6 sm:py-10 lg:py-16 px-4 sm:px-6 lg:px-8">
@@ -507,37 +605,48 @@
 
     <!-- Mobile Menu JavaScript -->
     <script>
-        // Simple mobile menu toggle functionality
+        // Enhanced mobile menu functionality with full-screen overlay
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        const menuCloseButton = document.getElementById('mobile-menu-close');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
         let isMenuOpen = false;
 
         function toggleMenu() {
             isMenuOpen = !isMenuOpen;
 
             if (isMenuOpen) {
-                mobileMenu.classList.remove('hidden');
+                // Open menu
+                mobileMenu.classList.add('active');
+                hamburgerIcon.classList.add('active');
                 mobileMenuButton.setAttribute('aria-expanded', 'true');
+                mobileMenuButton.setAttribute('aria-label', 'Close mobile navigation menu');
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = 'hidden';
             } else {
-                mobileMenu.classList.add('hidden');
+                // Close menu
+                mobileMenu.classList.remove('active');
+                hamburgerIcon.classList.remove('active');
                 mobileMenuButton.setAttribute('aria-expanded', 'false');
+                mobileMenuButton.setAttribute('aria-label', 'Open mobile navigation menu');
+                // Restore body scroll
+                document.body.style.overflow = '';
             }
         }
 
         function closeMenu() {
             if (isMenuOpen) {
                 isMenuOpen = false;
-                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('active');
+                hamburgerIcon.classList.remove('active');
                 mobileMenuButton.setAttribute('aria-expanded', 'false');
+                mobileMenuButton.setAttribute('aria-label', 'Open mobile navigation menu');
+                // Restore body scroll
+                document.body.style.overflow = '';
             }
         }
 
         // Toggle menu when hamburger button is clicked
         mobileMenuButton.addEventListener('click', toggleMenu);
-
-        // Close menu when close button is clicked
-        menuCloseButton.addEventListener('click', closeMenu);
 
         // Close menu when clicking on any navigation link
         const mobileMenuLinks = mobileMenu.querySelectorAll('nav a');
@@ -545,9 +654,9 @@
             link.addEventListener('click', closeMenu);
         });
 
-        // Close menu when clicking outside of it
-        document.addEventListener('click', function(event) {
-            if (isMenuOpen && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+        // Close menu when clicking on the overlay background (outside the nav content)
+        mobileMenu.addEventListener('click', function(event) {
+            if (event.target === mobileMenu) {
                 closeMenu();
             }
         });
@@ -556,6 +665,13 @@
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape' && isMenuOpen) {
                 closeMenu();
+            }
+        });
+
+        // Prevent body scroll bounce on iOS when menu is open
+        mobileMenu.addEventListener('touchmove', function(event) {
+            if (isMenuOpen) {
+                event.preventDefault();
             }
         });
     </script>
