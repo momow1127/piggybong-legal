@@ -188,6 +188,64 @@
         .important-gradient {
             background: linear-gradient(135deg, #DC4444 0%, #FF8E8E 100%);
         }
+
+        /* Enhanced Responsive Buttons */
+        .btn-responsive {
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+            padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
+            min-height: 44px; /* WCAG compliant tap target */
+            min-width: 44px;
+            border-radius: clamp(1.5rem, 3vw, 2rem);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-large {
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+            padding: clamp(1rem, 2.5vw, 1.25rem) clamp(2rem, 5vw, 2.5rem);
+            min-height: 48px; /* Larger for primary actions */
+            min-width: 48px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-icon {
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            padding: clamp(0.5rem, 1.5vw, 0.75rem);
+            min-height: 44px;
+            min-width: 44px;
+            border-radius: clamp(0.5rem, 2vw, 0.75rem);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        /* Enhanced focus and hover states */
+        .btn-responsive:focus, .btn-large:focus, .btn-icon:focus {
+            outline: 2px solid #8B55ED;
+            outline-offset: 2px;
+            transform: translateY(-1px);
+        }
+
+        .btn-responsive:hover, .btn-large:hover, .btn-icon:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-responsive:active, .btn-large:active, .btn-icon:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body class="text-white font-nunito">
@@ -203,7 +261,7 @@
 
                 <!-- Back to Home with proper spacing -->
                 <div class="ml-6 lg:ml-8">
-                    <a href="index.html" class="bg-white/20 backdrop-blur-sm border border-white/30 text-white px-6 py-3 rounded-full font-medium hover:bg-white/30 transition-colors duration-200">
+                    <a href="index.html" class="btn-responsive bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 focus:bg-white/40" aria-label="Navigate back to home page">
                         Back to Home
                     </a>
                 </div>
@@ -418,8 +476,8 @@
                 <!-- Download iOS Button -->
                 <div class="text-center mb-8">
                     <a href="index.html#plans"
-                       class="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-semibold hover:bg-white/20 transition-all duration-200 min-h-[44px]"
-                       aria-label="Download Piggy Bong App">
+                       class="btn-responsive bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30"
+                       aria-label="Download Piggy Bong iOS app">
                         Download iOS
                     </a>
                 </div>
@@ -440,8 +498,8 @@
                 </nav>
                 <!-- Right: Download iOS Button -->
                 <a href="index.html#plans"
-                   class="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-semibold hover:bg-white/20 transition-all duration-200 min-h-[44px]"
-                   aria-label="Download Piggy Bong App">
+                   class="btn-responsive bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30"
+                   aria-label="Download Piggy Bong iOS app">
                     Download iOS
                 </a>
             </div>

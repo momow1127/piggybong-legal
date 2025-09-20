@@ -182,19 +182,62 @@
         }
 
 
-        /* Responsive Buttons */
+        /* Enhanced Responsive Buttons */
         .btn-responsive {
             font-size: clamp(0.875rem, 2.5vw, 1rem);
             padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
-            min-height: 2.75rem; /* 44px minimum tap target */
+            min-height: 44px; /* WCAG compliant tap target */
+            min-width: 44px;
             border-radius: clamp(1.5rem, 3vw, 2rem);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-weight: 500;
         }
 
         .btn-large {
             font-size: clamp(1rem, 2.5vw, 1.125rem);
             padding: clamp(1rem, 2.5vw, 1.25rem) clamp(2rem, 5vw, 2.5rem);
-            min-height: 3rem; /* 48px for primary actions */
-            border-radius: 9999px; /* Consistent full rounded corners */
+            min-height: 48px; /* Larger for primary actions */
+            min-width: 48px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-icon {
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            padding: clamp(0.5rem, 1.5vw, 0.75rem);
+            min-height: 44px;
+            min-width: 44px;
+            border-radius: clamp(0.5rem, 2vw, 0.75rem);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        /* Enhanced focus and hover states */
+        .btn-responsive:focus, .btn-large:focus, .btn-icon:focus {
+            outline: 2px solid #8B55ED;
+            outline-offset: 2px;
+            transform: translateY(-1px);
+        }
+
+        .btn-responsive:hover, .btn-large:hover, .btn-icon:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-responsive:active, .btn-large:active, .btn-icon:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
         /* Mobile-first responsive containers */
@@ -255,7 +298,7 @@
 
                     <!-- Download iOS Button with proper spacing -->
                     <div class="ml-6 lg:ml-8">
-                        <a href="#plans" class="bg-white/20 backdrop-blur-sm border border-white/30 text-white px-6 py-3 rounded-full font-medium hover:bg-white/30 transition-colors duration-200 min-h-[44px] flex items-center">Download iOS</a>
+                        <a href="#plans" class="btn-responsive bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 focus:bg-white/40" aria-label="Download Piggy Bong iOS app">Download iOS</a>
                     </div>
                 </div>
 
@@ -263,11 +306,11 @@
                 <div class="md:hidden">
                     <button
                         id="mobile-menu-button"
-                        class="text-white p-2 rounded-lg hover:bg-white/10 transition-colors duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
-                        aria-label="Toggle mobile menu"
+                        class="btn-icon text-white hover:bg-white/10 focus:bg-white/20"
+                        aria-label="Open mobile navigation menu"
                         aria-expanded="false"
                     >
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
@@ -279,8 +322,8 @@
                 <div class="bg-[#1A0E2A] border border-white/10 rounded-b-lg shadow-2xl mx-4">
                     <!-- Close button -->
                     <div class="flex justify-end p-4">
-                        <button id="mobile-menu-close" class="text-white/80 hover:text-white p-3 rounded-full hover:bg-white/10 transition-colors duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button id="mobile-menu-close" class="btn-icon text-white/80 hover:text-white hover:bg-white/10 focus:bg-white/20" aria-label="Close mobile navigation menu">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
@@ -288,12 +331,12 @@
 
                     <!-- Menu content -->
                     <nav class="px-4 pb-6 space-y-4">
-                        <a href="#" class="block text-white text-lg font-medium hover:text-gray-100 transition-colors duration-200 py-3 px-2">Home</a>
-                        <a href="#how-it-works" class="block text-white text-lg font-medium hover:text-gray-100 transition-colors duration-200 py-3 px-2">How It Works</a>
-                        <a href="#plans" class="block text-white text-lg font-medium hover:text-gray-100 transition-colors duration-200 py-3 px-2">Features</a>
-                        <a href="mailto:hello@piggybong.com" class="block text-white text-lg font-medium hover:text-gray-100 transition-colors duration-200 py-3 px-2">Contact Us</a>
+                        <a href="#" class="block text-white text-responsive-card-title font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 px-2 min-h-[44px] flex items-center">Home</a>
+                        <a href="#how-it-works" class="block text-white text-responsive-card-title font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 px-2 min-h-[44px] flex items-center">How It Works</a>
+                        <a href="#plans" class="block text-white text-responsive-card-title font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 px-2 min-h-[44px] flex items-center">Features</a>
+                        <a href="mailto:hello@piggybong.com" class="block text-white text-responsive-card-title font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 px-2 min-h-[44px] flex items-center">Contact Us</a>
                         <div class="pt-2">
-                            <a href="#plans" class="inline-block bg-white/20 border border-white/30 text-white px-6 py-3 rounded-full font-medium hover:bg-white/30 transition-colors duration-200 min-h-[44px] text-center w-full">Download iOS</a>
+                            <a href="#plans" class="btn-responsive bg-white/20 border border-white/30 text-white hover:bg-white/30 focus:bg-white/40 w-full" aria-label="Download Piggy Bong iOS app">Download iOS</a>
                         </div>
                     </nav>
                 </div>
@@ -313,8 +356,8 @@
                     </p>
                     <div class="flex flex-col items-center lg:items-start space-y-4">
                         <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start w-full sm:w-auto">
-                            <a href="#plans" class="btn-gradient text-white btn-large font-medium hover:opacity-90 transition-opacity w-full sm:w-auto text-center rounded-full">Get Started Free</a>
-                            <a href="#how-it-works" class="bg-white/10 backdrop-blur-sm border border-white/20 text-white btn-large font-medium hover:bg-white/20 transition-colors w-full sm:w-auto text-center rounded-full">Learn More</a>
+                            <a href="#plans" class="btn-large btn-gradient text-white hover:opacity-90 focus:opacity-80 w-full sm:w-auto" aria-label="Get started with Piggy Bong for free">Get Started Free</a>
+                            <a href="#how-it-works" class="btn-large bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30 w-full sm:w-auto" aria-label="Learn more about how Piggy Bong works">Learn More</a>
                         </div>
 
                     </div>
@@ -384,7 +427,7 @@
                             <span>Manual spending logs</span>
                         </li>
                     </ul>
-                    <button class="w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white btn-responsive font-medium hover:bg-white/20 transition-colors">Get Started</button>
+                    <button class="btn-responsive w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30" aria-label="Get started with free plan">Get Started</button>
                 </div>
                 <!-- VIP Plan -->
                 <div class="card-glass p-4 lg:p-6 rounded-2xl ring-2 ring-primary flex flex-col">
@@ -404,7 +447,7 @@
                             <span>Priority event alerts</span>
                         </li>
                     </ul>
-                    <button class="w-full btn-gradient text-white btn-responsive font-medium hover:opacity-90 transition-opacity">Upgrade to VIP</button>
+                    <button class="btn-responsive w-full btn-gradient text-white hover:opacity-90 focus:opacity-80" aria-label="Upgrade to VIP plan for $2.99 per month">Upgrade to VIP</button>
                 </div>
             </div>
         </div>
@@ -428,8 +471,8 @@
                 <!-- Download iOS Button -->
                 <div class="text-center mb-8">
                     <a href="#plans"
-                       class="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-semibold hover:bg-white/20 transition-all duration-200 min-h-[44px]"
-                       aria-label="Download Piggy Bong App">
+                       class="btn-responsive bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30"
+                       aria-label="Download Piggy Bong iOS app">
                         Download iOS
                     </a>
                 </div>
@@ -449,8 +492,8 @@
                 </nav>
                 <!-- Right: Download iOS Button -->
                 <a href="#plans"
-                   class="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-semibold hover:bg-white/20 transition-all duration-200 min-h-[44px]"
-                   aria-label="Download Piggy Bong App">
+                   class="btn-responsive bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30"
+                   aria-label="Download Piggy Bong iOS app">
                     Download iOS
                 </a>
             </div>

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
     <title>Terms of Service - Piggy Bong</title>
     <link rel="icon" type="image/png" href="fav-icon.png">
     <link rel="shortcut icon" type="image/png" href="fav-icon.png">
@@ -188,11 +189,111 @@
         .important-gradient {
             background: linear-gradient(135deg, #DC4444 0%, #FF8E8E 100%);
         }
+
+        /* Enhanced Responsive Buttons */
+        .btn-responsive {
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+            padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
+            min-height: 44px; /* WCAG compliant tap target */
+            min-width: 44px;
+            border-radius: clamp(1.5rem, 3vw, 2rem);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-large {
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+            padding: clamp(1rem, 2.5vw, 1.25rem) clamp(2rem, 5vw, 2.5rem);
+            min-height: 48px; /* Larger for primary actions */
+            min-width: 48px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-icon {
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            padding: clamp(0.5rem, 1.5vw, 0.75rem);
+            min-height: 44px;
+            min-width: 44px;
+            border-radius: clamp(0.5rem, 2vw, 0.75rem);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        /* Enhanced focus and hover states */
+        .btn-responsive:focus, .btn-large:focus, .btn-icon:focus {
+            outline: 2px solid #8B55ED;
+            outline-offset: 2px;
+            transform: translateY(-1px);
+        }
+
+        .btn-responsive:hover, .btn-large:hover, .btn-icon:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-responsive:active, .btn-large:active, .btn-icon:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Accessibility: Skip to content link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: #5D2CEE;
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 10000;
+            font-weight: 600;
+        }
+
+        .skip-link:focus {
+            top: 6px;
+        }
+
+        /* Enhanced focus states for accessibility */
+        a:focus, button:focus, [tabindex]:focus {
+            outline: 2px solid #8B55ED;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        /* Remove default focus outline and apply custom styling */
+        *:focus {
+            outline: none;
+        }
+
+        /* Ensure touch targets are at least 44px */
+        a, button, [role="button"] {
+            min-height: 44px;
+            min-width: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body class="text-white font-nunito">
+    <!-- Skip to content link for screen readers -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Navigation Bar -->
-    <nav class="sticky top-0 z-50 bg-black/20 backdrop-blur-lg border-b border-white/10 shadow-lg">
+    <nav class="sticky top-0 z-50 bg-black/20 backdrop-blur-lg border-b border-white/10 shadow-lg" role="navigation" aria-label="Primary navigation">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-5 min-h-[80px]">
                 <!-- Logo with Icon -->
@@ -203,7 +304,7 @@
 
                 <!-- Back to Home with proper spacing -->
                 <div class="ml-6 lg:ml-8">
-                    <a href="index.html" class="bg-white/20 backdrop-blur-sm border border-white/30 text-white px-6 py-3 rounded-full font-medium hover:bg-white/30 transition-colors duration-200">
+                    <a href="index.html" class="btn-responsive bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 focus:bg-white/40" aria-label="Navigate back to home page">
                         Back to Home
                     </a>
                 </div>
@@ -212,7 +313,7 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="min-h-screen py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
+    <main id="main-content" tabindex="-1" class="min-h-screen py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
         <div class="container-responsive">
             <!-- Header -->
             <div class="text-center mb-8 sm:mb-12">
@@ -483,7 +584,7 @@
                 </section>
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- Footer -->
     <footer class="border-t border-white/10">
@@ -493,19 +594,19 @@
                 <!-- Navigation Links -->
                 <nav class="text-center mb-8" aria-label="Footer Navigation">
                     <div class="grid grid-cols-2 gap-y-3 gap-x-4">
-                        <a href="index.html#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">How It Works</a>
-                        <a href="index.html#features" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">Piggy Bong AI</a>
-                        <a href="index.html#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">Plans</a>
-                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">Contact</a>
-                        <a href="privacy.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium min-h-[44px] flex items-center justify-center">Privacy Policy</a>
-                        <span class="text-gray-400 text-sm font-medium min-h-[44px] flex items-center justify-center cursor-default">Terms of Service</span>
+                        <a href="index.html#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">How It Works</a>
+                        <a href="index.html#features" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Piggy Bong AI</a>
+                        <a href="index.html#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Plans</a>
+                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Contact</a>
+                        <a href="privacy.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Privacy Policy</a>
+                        <span class="text-gray-400 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center cursor-default" aria-current="page">Terms of Service</span>
                     </div>
                 </nav>
                 <!-- Download iOS Button -->
                 <div class="text-center mb-8">
                     <a href="index.html#plans"
-                       class="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-semibold hover:bg-white/20 transition-all duration-200 min-h-[44px]"
-                       aria-label="Download Piggy Bong App">
+                       class="btn-responsive bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30"
+                       aria-label="Download Piggy Bong iOS app">
                         Download iOS
                     </a>
                 </div>
@@ -516,25 +617,25 @@
                 <!-- Left: Navigation Links -->
                 <nav aria-label="Footer Navigation">
                     <div class="flex flex-wrap gap-x-8">
-                        <a href="index.html#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">How It Works</a>
-                        <a href="index.html#features" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">Piggy Bong AI</a>
-                        <a href="index.html#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">Plans</a>
-                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">Contact</a>
-                        <a href="privacy.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-sm font-medium">Privacy Policy</a>
-                        <span class="text-gray-400 text-sm font-medium cursor-default">Terms of Service</span>
+                        <a href="index.html#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center">How It Works</a>
+                        <a href="index.html#features" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center">Piggy Bong AI</a>
+                        <a href="index.html#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center">Plans</a>
+                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center">Contact</a>
+                        <a href="privacy.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center">Privacy Policy</a>
+                        <span class="text-gray-400 text-responsive-footer font-medium cursor-default min-h-[44px] flex items-center" aria-current="page">Terms of Service</span>
                     </div>
                 </nav>
                 <!-- Right: Download iOS Button -->
                 <a href="index.html#plans"
-                   class="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-semibold hover:bg-white/20 transition-all duration-200 min-h-[44px]"
-                   aria-label="Download Piggy Bong App">
+                   class="btn-responsive bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30"
+                   aria-label="Download Piggy Bong iOS app">
                     Download iOS
                 </a>
             </div>
 
             <!-- Copyright -->
             <div class="text-center">
-                <p class="text-white/60 text-sm">© 2025 Piggy Bong All Rights Reserved.</p>
+                <p class="text-white/60 text-responsive-footer">© 2025 Piggy Bong All Rights Reserved.</p>
             </div>
         </div>
     </footer>
