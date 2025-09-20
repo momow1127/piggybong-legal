@@ -292,7 +292,7 @@
             position: sticky;
             position: -webkit-sticky; /* Safari fallback */
             top: 0;
-            z-index: 9999; /* Ensure it's above all content */
+            z-index: 10000; /* Ensure it's above mobile menu overlay */
             /* Prevent layout shifts on sticky activation */
             will-change: transform;
             /* Force hardware acceleration for smooth scrolling */
@@ -318,7 +318,7 @@
         /* Prevent content jumping when navbar becomes sticky */
         .navbar-container {
             position: relative;
-            z-index: 9999;
+            z-index: 10000;
         }
 
         /* Full Screen Mobile Menu Styles */
