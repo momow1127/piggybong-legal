@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" href="piggy-lighstick3x.png" as="image" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -364,6 +365,147 @@
                 transform: rotate(2deg) translateY(-2px);
             }
         }
+
+        /* Image Loading States */
+        .image-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-skeleton {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.1) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s ease-in-out infinite;
+            border-radius: 1rem;
+            z-index: 2;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-skeleton.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .hero-image {
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        .hero-image.loaded {
+            opacity: 1;
+        }
+
+        .image-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-fallback.show {
+            opacity: 1;
+        }
+
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            .image-skeleton {
+                animation: none;
+                background: rgba(255, 255, 255, 0.1);
+            }
+            .hero-image {
+                transition: none;
+            }
+            .lightstick-glow {
+                animation: none;
+            }
+        }
+
+        /* SVG Icon System */
+        .icon-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        .check-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            flex-shrink: 0;
+            color: #4ADE80;
+        }
+
+        .feature-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            color: #ffffff;
+        }
+
+        @media (min-width: 1024px) {
+            .feature-icon {
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+
+        /* Screen reader only text */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 </head>
 <body class="text-white font-nunito">
@@ -373,7 +515,20 @@
             <div class="flex justify-between items-center py-5 min-h-[80px]">
                 <!-- Logo with Icon -->
                 <a href="#hero" class="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200">
-                    <img src="nav-icon.svg" alt="Piggy Bong Logo" class="h-8 w-auto sm:h-10 lg:h-12 object-contain" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
+                    <div class="icon-container h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12">
+                        <img
+                            id="nav-logo"
+                            src="nav-icon.svg"
+                            alt="Piggy Bong Logo"
+                            class="h-full w-full object-contain"
+                            style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;"
+                            loading="eager"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <!-- Logo Fallback -->
+                        <div class="icon-fallback" style="display: none;">
+                            <span class="text-primary font-bold text-lg">🐷</span>
+                        </div>
+                    </div>
                     <span class="font-bold text-xl text-white">Piggy Bong</span>
                 </a>
 
@@ -461,7 +616,29 @@
                     </div>
                 </div>
                 <div class="flex justify-center mt-8 lg:mt-0">
-                    <img src="piggy-lighstick3x.png" alt="Piggy Bong App" class="w-full max-w-xs sm:max-w-sm lg:max-w-md h-auto rounded-2xl lightstick-glow">
+                    <div class="image-container w-full max-w-xs sm:max-w-sm lg:max-w-md">
+                        <!-- Skeleton Loading Placeholder -->
+                        <div id="image-skeleton" class="image-skeleton"></div>
+
+                        <!-- Error Fallback -->
+                        <div id="image-fallback" class="image-fallback">
+                            <svg class="w-16 h-16 mb-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                            <p class="text-sm font-medium">Piggy Bong</p>
+                            <p class="text-xs opacity-75">K-pop Fan Tracker</p>
+                        </div>
+
+                        <!-- Main Image -->
+                        <img
+                            id="hero-image"
+                            src="piggy-lighstick3x.png"
+                            alt="Piggy Bong App - K-pop fan tracking lightstick interface"
+                            class="hero-image w-full h-auto rounded-2xl lightstick-glow"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
                 </div>
             </div>
         </div>
@@ -477,24 +654,46 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
                 <!-- Card 1 -->
                 <div class="card-glass p-4 lg:p-6 rounded-2xl text-left">
-                    <div class="mb-4 lg:mb-6">
-                        <img src="tracking.svg" alt="Set Your Priorities" class="w-10 h-10 lg:w-12 lg:h-12">
+                    <div class="mb-4 lg:mb-6 icon-container">
+                        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M3 3v16a2 2 0 0 0 2 2h16"/>
+                            <path d="m19 9-5 5-4-4-3 3"/>
+                            <title>Chart Line Icon</title>
+                        </svg>
+                        <span class="sr-only">Set Your Priorities - Track spending data and focus on what matters most</span>
+                        <div class="icon-fallback" style="display: none;">📊</div>
                     </div>
                     <h3 class="font-bold text-responsive-card-title text-white mb-3 lg:mb-4">Set Your Priorities</h3>
                     <p class="text-responsive-card-desc text-gray-300">Focus on what matters most like albums, concerts, or merch</p>
                 </div>
                 <!-- Card 2 -->
                 <div class="card-glass p-4 lg:p-6 rounded-2xl text-left">
-                    <div class="mb-4 lg:mb-6">
-                        <img src="ai.svg" alt="AI-Powered Insights" class="w-10 h-10 lg:w-12 lg:h-12">
+                    <div class="mb-4 lg:mb-6 icon-container">
+                        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/>
+                            <path d="M20 2v4"/>
+                            <path d="M22 4h-4"/>
+                            <circle cx="4" cy="20" r="2"/>
+                            <title>AI Sparkles Icon</title>
+                        </svg>
+                        <span class="sr-only">AI-Powered Insights - Personalized recommendations based on your fandom behavior</span>
+                        <div class="icon-fallback" style="display: none;">✨</div>
                     </div>
                     <h3 class="font-bold text-responsive-card-title text-white mb-3 lg:mb-4">AI-Powered Insights</h3>
                     <p class="text-responsive-card-desc text-gray-300">Personalized tips based on your fandom behavior</p>
                 </div>
                 <!-- Card 3 -->
                 <div class="card-glass p-4 lg:p-6 rounded-2xl text-left">
-                    <div class="mb-4 lg:mb-6">
-                        <img src="calendar.svg" alt="Event Reminders" class="w-10 h-10 lg:w-12 lg:h-12">
+                    <div class="mb-4 lg:mb-6 icon-container">
+                        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M8 2v4"/>
+                            <path d="M16 2v4"/>
+                            <rect width="18" height="18" x="3" y="4" rx="2"/>
+                            <path d="M3 10h18"/>
+                            <title>Calendar Icon</title>
+                        </svg>
+                        <span class="sr-only">Event Reminders - Never miss comebacks, concerts, or important K-pop events</span>
+                        <div class="icon-fallback" style="display: none;">📅</div>
                     </div>
                     <h3 class="font-bold text-responsive-card-title text-white mb-3 lg:mb-4">Event Reminders</h3>
                     <p class="text-responsive-card-desc text-gray-300">Never miss a comeback or concert again</p>
@@ -517,11 +716,27 @@
                     <p class="text-responsive-price font-bold text-white mb-6">$0<span class="text-responsive-price-suffix font-normal text-gray-300">/month</span></p>
                     <ul class="space-y-3 mb-6 lg:mb-8 flex-grow">
                         <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
-                            <img src="circle-check.svg" alt="Check" class="w-5 h-5 flex-shrink-0">
+                            <span class="icon-container" aria-label="Feature included">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="m9 12 2 2 4-4"/>
+                                    <title>Feature included</title>
+                                </svg>
+                                <span class="sr-only">Included in Free Plan</span>
+                                <div class="icon-fallback" style="display: none;">✓</div>
+                            </span>
                             <span>Track up to 3 artists</span>
                         </li>
                         <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
-                            <img src="circle-check.svg" alt="Check" class="w-5 h-5 flex-shrink-0">
+                            <span class="icon-container" aria-label="Feature included">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="m9 12 2 2 4-4"/>
+                                    <title>Feature included</title>
+                                </svg>
+                                <span class="sr-only">Included in Free Plan</span>
+                                <div class="icon-fallback" style="display: none;">✓</div>
+                            </span>
                             <span>Manual spending logs</span>
                         </li>
                     </ul>
@@ -533,15 +748,39 @@
                     <p class="text-responsive-price font-bold text-white mb-6">$2.99<span class="text-responsive-price-suffix font-normal text-gray-300">/month</span></p>
                     <ul class="space-y-3 mb-6 lg:mb-8 flex-grow">
                         <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
-                            <img src="circle-check.svg" alt="Check" class="w-5 h-5 flex-shrink-0">
+                            <span class="icon-container" aria-label="Feature included">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="m9 12 2 2 4-4"/>
+                                    <title>Feature included</title>
+                                </svg>
+                                <span class="sr-only">Included in VIP Plan</span>
+                                <div class="icon-fallback" style="display: none;">✓</div>
+                            </span>
                             <span>Track up to 6 artists</span>
                         </li>
                         <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
-                            <img src="circle-check.svg" alt="Check" class="w-5 h-5 flex-shrink-0">
+                            <span class="icon-container" aria-label="Feature included">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="m9 12 2 2 4-4"/>
+                                    <title>Feature included</title>
+                                </svg>
+                                <span class="sr-only">Included in VIP Plan</span>
+                                <div class="icon-fallback" style="display: none;">✓</div>
+                            </span>
                             <span>Full AI insights</span>
                         </li>
                         <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
-                            <img src="circle-check.svg" alt="Check" class="w-5 h-5 flex-shrink-0">
+                            <span class="icon-container" aria-label="Feature included">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="m9 12 2 2 4-4"/>
+                                    <title>Feature included</title>
+                                </svg>
+                                <span class="sr-only">Included in VIP Plan</span>
+                                <div class="icon-fallback" style="display: none;">✓</div>
+                            </span>
                             <span>Priority event alerts</span>
                         </li>
                     </ul>
@@ -672,6 +911,54 @@
         mobileMenu.addEventListener('touchmove', function(event) {
             if (isMenuOpen) {
                 event.preventDefault();
+            }
+        });
+    </script>
+
+    <!-- Hero Image Loading Script -->
+    <script>
+        // Hero image loading management
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroImage = document.getElementById('hero-image');
+            const skeleton = document.getElementById('image-skeleton');
+            const fallback = document.getElementById('image-fallback');
+
+            function showImage() {
+                // Hide skeleton and show image with fade-in
+                skeleton.classList.add('hidden');
+                heroImage.classList.add('loaded');
+
+                // Ensure fallback is hidden
+                fallback.classList.remove('show');
+            }
+
+            function showFallback() {
+                // Hide skeleton and show fallback
+                skeleton.classList.add('hidden');
+                fallback.classList.add('show');
+
+                // Log for debugging (remove in production)
+                console.log('Hero image failed to load, showing fallback');
+            }
+
+            // Check if image is already cached/loaded
+            if (heroImage.complete) {
+                if (heroImage.naturalWidth > 0) {
+                    showImage();
+                } else {
+                    showFallback();
+                }
+            } else {
+                // Set up event listeners for loading states
+                heroImage.addEventListener('load', showImage);
+                heroImage.addEventListener('error', showFallback);
+
+                // Fallback timeout in case neither event fires (shouldn't happen but safety first)
+                setTimeout(() => {
+                    if (!heroImage.classList.contains('loaded') && !fallback.classList.contains('show')) {
+                        showFallback();
+                    }
+                }, 5000); // 5 second timeout
             }
         });
     </script>
