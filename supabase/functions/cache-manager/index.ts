@@ -1,0 +1,450 @@
+// Production-Grade Cache Manager for PiggyBong
+import { serve } from "https://deno.land/std@0.224.0/http/server.ts"
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { corsHeaders, authenticateRequest, createAPIResponse, createErrorResponse } from '../_shared/api-middleware.ts'
+
+const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
+// Multi-layer caching configuration
+const CACHE_LAYERS = {
+  MEMORY: 'memory',      // In-memory cache (fastest, limited size)
+  DATABASE: 'database',  // Supabase cache table (persistent)
+  CDN: 'cdn'            // CloudFront/CDN cache (global distribution)
+}
+
+const CACHE_TTL = {
+  USER_DASHBOARD: 300,      // 5 minutes
+  ARTIST_NEWS: 1800,        // 30 minutes
+  ARTIST_DATA: 3600,        // 1 hour
+  SPENDING_ANALYTICS: 7200, // 2 hours
+  GLOBAL_STATS: 14400,      // 4 hours
+  ARTIST_IMAGES: 86400      // 24 hours
+}
+
+// In-memory cache store (use Redis in production)
+const memoryCache = new Map<string, CacheEntry>()
+
+interface CacheEntry {
+  data: any
+  timestamp: number
+  ttl: number
+  hits: number
+}
+
+interface CacheRequest {
+  action: 'get' | 'set' | 'invalidate' | 'stats' | 'warm' | 'optimize'
+  key?: string
+  data?: any
+  ttl?: number
+  layer?: 'memory' | 'database' | 'cdn'
+  pattern?: string
+}
+
+serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
+
+  try {
+    const body = await req.json() as CacheRequest
+
+    // Public endpoints don't require authentication
+    if (['stats', 'optimize'].includes(body.action)) {
+      // Service role only for admin operations
+      const authHeader = req.headers.get('Authorization')
+      if (!authHeader || !authHeader.includes('service_role')) {
+        throw new Error('Admin access required')
+      }
+    }
+
+    switch (body.action) {
+      case 'get':
+        return await getCachedData(body.key!, body.layer)
+      
+      case 'set':
+        return await setCachedData(body.key!, body.data, body.ttl, body.layer)
+      
+      case 'invalidate':
+        return await invalidateCache(body.key, body.pattern)
+      
+      case 'stats':
+        return await getCacheStats()
+      
+      case 'warm':
+        return await warmCache()
+      
+      case 'optimize':
+        return await optimizeCache()
+      
+      default:
+        throw new Error(`Invalid action: ${body.action}`)
+    }
+
+  } catch (error) {
+    return createErrorResponse(error, 400)
+  }
+})
+
+async function getCachedData(key: string, layer = 'memory') {
+  let data = null
+  let source = 'miss'
+
+  // Try memory cache first (fastest)
+  if (layer === 'memory' || layer === undefined) {
+    const memEntry = memoryCache.get(key)
+    if (memEntry && Date.now() - memEntry.timestamp < memEntry.ttl * 1000) {
+      memEntry.hits++
+      data = memEntry.data
+      source = 'memory'
+    }
+  }
+
+  // Fallback to database cache
+  if (!data && layer !== 'memory') {
+    const dbData = await getDatabaseCache(key)
+    if (dbData) {
+      data = dbData
+      source = 'database'
+      
+      // Populate memory cache for future requests
+      memoryCache.set(key, {
+        data: dbData,
+        timestamp: Date.now(),
+        ttl: 300, // 5 minutes in memory
+        hits: 1
+      })
+    }
+  }
+
+  return createAPIResponse({
+    hit: !!data,
+    source,
+    data,
+    key
+  })
+}
+
+async function setCachedData(key: string, data: any, ttl = 3600, layer = 'database') {
+  const timestamp = Date.now()
+
+  // Always store in memory for immediate access
+  memoryCache.set(key, {
+    data,
+    timestamp,
+    ttl,
+    hits: 0
+  })
+
+  // Store in database for persistence
+  if (layer === 'database' || layer === undefined) {
+    await setDatabaseCache(key, data, ttl)
+  }
+
+  // Memory cleanup if too many entries
+  if (memoryCache.size > 1000) {
+    await cleanupMemoryCache()
+  }
+
+  return createAPIResponse({
+    success: true,
+    key,
+    ttl,
+    stored_at: new Date(timestamp).toISOString()
+  })
+}
+
+async function invalidateCache(key?: string, pattern?: string) {
+  let invalidated = 0
+
+  if (key) {
+    // Invalidate specific key
+    memoryCache.delete(key)
+    await supabase
+      .from('api_cache')
+      .delete()
+      .eq('cache_key', key)
+    invalidated = 1
+  } else if (pattern) {
+    // Invalidate by pattern
+    const keysToDelete = []
+    
+    for (const [cacheKey] of memoryCache) {
+      if (cacheKey.includes(pattern)) {
+        keysToDelete.push(cacheKey)
+      }
+    }
+    
+    keysToDelete.forEach(k => memoryCache.delete(k))
+    
+    await supabase
+      .from('api_cache')
+      .delete()
+      .like('cache_key', `%${pattern}%`)
+    
+    invalidated = keysToDelete.length
+  }
+
+  return createAPIResponse({
+    success: true,
+    invalidated_keys: invalidated
+  })
+}
+
+async function getCacheStats() {
+  const memoryStats = {
+    entries: memoryCache.size,
+    total_hits: Array.from(memoryCache.values()).reduce((sum, entry) => sum + entry.hits, 0),
+    memory_usage_mb: (JSON.stringify(Array.from(memoryCache.entries())).length / 1024 / 1024).toFixed(2)
+  }
+
+  const { data: dbStats } = await supabase
+    .from('api_cache')
+    .select('cache_key, created_at, data')
+    
+  const databaseStats = {
+    entries: dbStats?.length || 0,
+    size_mb: dbStats ? (JSON.stringify(dbStats).length / 1024 / 1024).toFixed(2) : '0',
+    oldest_entry: dbStats?.length ? 
+      new Date(Math.min(...dbStats.map(d => new Date(d.created_at).getTime()))).toISOString() : null
+  }
+
+  // Cache hit rate analysis
+  const { data: requestLogs } = await supabase
+    .from('request_logs')
+    .select('endpoint, status_code, response_time_ms')
+    .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()) // Last 24 hours
+    .limit(1000)
+
+  const performanceStats = {
+    avg_response_time: requestLogs?.length ? 
+      (requestLogs.reduce((sum, log) => sum + (log.response_time_ms || 0), 0) / requestLogs.length).toFixed(2) : 0,
+    success_rate: requestLogs?.length ?
+      ((requestLogs.filter(log => log.status_code < 400).length / requestLogs.length) * 100).toFixed(2) : 100
+  }
+
+  return createAPIResponse({
+    memory: memoryStats,
+    database: databaseStats,
+    performance: performanceStats,
+    timestamp: new Date().toISOString()
+  })
+}
+
+async function warmCache() {
+  const warmupTasks = []
+
+  // Warm up popular artist data
+  const { data: popularArtists } = await supabase
+    .from('user_artists')
+    .select('artist_id, artists(name, image_url)')
+    .limit(50)
+
+  if (popularArtists) {
+    for (const ua of popularArtists) {
+      warmupTasks.push(warmArtistCache(ua.artist_id, ua.artists))
+    }
+  }
+
+  // Warm up global statistics
+  warmupTasks.push(warmGlobalStats())
+
+  // Warm up news feeds for active users
+  warmupTasks.push(warmNewsFeeds())
+
+  const results = await Promise.allSettled(warmupTasks)
+  const warmed = results.filter(r => r.status === 'fulfilled').length
+
+  return createAPIResponse({
+    success: true,
+    warmed_entries: warmed,
+    total_tasks: warmupTasks.length
+  })
+}
+
+async function optimizeCache() {
+  let optimizations = 0
+
+  // 1. Clean up expired entries
+  const expiredKeys = []
+  for (const [key, entry] of memoryCache) {
+    if (Date.now() - entry.timestamp > entry.ttl * 1000) {
+      expiredKeys.push(key)
+    }
+  }
+  expiredKeys.forEach(key => memoryCache.delete(key))
+  optimizations += expiredKeys.length
+
+  // 2. Clean up database cache
+  const { data: deletedRows } = await supabase
+    .from('api_cache')
+    .delete()
+    .lt('expires_at', new Date().toISOString())
+    .select('id')
+    
+  optimizations += deletedRows?.length || 0
+
+  // 3. Optimize frequently accessed data
+  const hotKeys = Array.from(memoryCache.entries())
+    .filter(([_, entry]) => entry.hits > 10)
+    .map(([key]) => key)
+
+  for (const hotKey of hotKeys.slice(0, 10)) {
+    const entry = memoryCache.get(hotKey)
+    if (entry && entry.ttl < 3600) {
+      // Extend TTL for frequently accessed items
+      entry.ttl = 3600
+      await setDatabaseCache(hotKey, entry.data, 3600)
+      optimizations++
+    }
+  }
+
+  return createAPIResponse({
+    success: true,
+    optimizations_applied: optimizations,
+    hot_keys: hotKeys.length
+  })
+}
+
+// Helper functions
+async function getDatabaseCache(key: string): Promise<any | null> {
+  try {
+    const { data, error } = await supabase
+      .from('api_cache')
+      .select('data, expires_at')
+      .eq('cache_key', key)
+      .single()
+
+    if (error || !data) return null
+
+    // Check if expired
+    if (new Date(data.expires_at) < new Date()) {
+      await supabase.from('api_cache').delete().eq('cache_key', key)
+      return null
+    }
+
+    return data.data
+  } catch {
+    return null
+  }
+}
+
+async function setDatabaseCache(key: string, data: any, ttl: number): Promise<void> {
+  const expiresAt = new Date(Date.now() + ttl * 1000)
+
+  try {
+    await supabase
+      .from('api_cache')
+      .upsert({
+        cache_key: key,
+        data: data,
+        expires_at: expiresAt.toISOString(),
+        created_at: new Date().toISOString()
+      })
+  } catch (error) {
+    console.error('Database cache write error:', error)
+  }
+}
+
+async function cleanupMemoryCache(): Promise<void> {
+  // Remove least recently used entries
+  const entries = Array.from(memoryCache.entries())
+  const sortedByHits = entries.sort(([,a], [,b]) => a.hits - b.hits)
+  
+  // Remove bottom 20%
+  const toRemove = Math.floor(entries.length * 0.2)
+  for (let i = 0; i < toRemove; i++) {
+    memoryCache.delete(sortedByHits[i][0])
+  }
+}
+
+async function warmArtistCache(artistId: string, artistData: any): Promise<void> {
+  const cacheKey = `artist:${artistId}`
+  
+  // Cache artist basic data
+  memoryCache.set(cacheKey, {
+    data: artistData,
+    timestamp: Date.now(),
+    ttl: CACHE_TTL.ARTIST_DATA,
+    hits: 0
+  })
+
+  // Cache recent news for this artist
+  const { data: news } = await supabase
+    .rpc('get_optimized_user_feed', { 
+      p_user_id: null, // Global news
+      p_limit: 10 
+    })
+
+  if (news) {
+    memoryCache.set(`news:${artistId}`, {
+      data: news,
+      timestamp: Date.now(),
+      ttl: CACHE_TTL.ARTIST_NEWS,
+      hits: 0
+    })
+  }
+}
+
+async function warmGlobalStats(): Promise<void> {
+  const { data: stats } = await supabase
+    .rpc('get_subscription_insights', { days_back: 30 })
+
+  if (stats) {
+    memoryCache.set('global:stats', {
+      data: stats,
+      timestamp: Date.now(),
+      ttl: CACHE_TTL.GLOBAL_STATS,
+      hits: 0
+    })
+  }
+}
+
+async function warmNewsFeeds(): Promise<void> {
+  // Pre-cache news for active users
+  const { data: activeUsers } = await supabase
+    .from('users')
+    .select('id')
+    .gte('updated_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString())
+    .limit(100)
+
+  if (activeUsers) {
+    for (const user of activeUsers) {
+      const { data: userNews } = await supabase
+        .rpc('get_subscription_aware_news_feed', {
+          p_user_id: user.id,
+          p_limit: 20
+        })
+
+      if (userNews) {
+        memoryCache.set(`feed:${user.id}`, {
+          data: userNews,
+          timestamp: Date.now(),
+          ttl: CACHE_TTL.ARTIST_NEWS,
+          hits: 0
+        })
+      }
+    }
+  }
+}
+
+// Cache invalidation patterns for different data types
+export const CACHE_INVALIDATION_PATTERNS = {
+  USER_DATA: (userId: string) => [`dashboard:${userId}`, `feed:${userId}`, `goals:${userId}`],
+  ARTIST_DATA: (artistId: string) => [`artist:${artistId}`, `news:${artistId}`],
+  PURCHASE_DATA: (userId: string) => [`dashboard:${userId}`, `analytics:${userId}`],
+  NEWS_DATA: () => ['news:', 'feed:'],
+  GLOBAL_DATA: () => ['global:', 'stats:']
+}
+
+// Performance monitoring
+setInterval(async () => {
+  const stats = await getCacheStats()
+  
+  await supabase
+    .rpc('record_performance_metric', {
+      p_metric_name: 'cache_memory_entries',
+      p_value: memoryCache.size
+    })
+}, 60000) // Every minute

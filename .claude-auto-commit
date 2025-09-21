@@ -1,0 +1,6 @@
+#!/bin/bash
+# Claude Code auto-commit trigger
+# This file is used internally by Claude to commit after changes
+
+source ./auto-commit-aggressive.sh
+commit_and_push

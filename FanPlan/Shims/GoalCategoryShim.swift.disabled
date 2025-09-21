@@ -1,0 +1,5 @@
+import Foundation
+
+// MARK: - GoalCategory Canonical Redirect  
+// GoalCategory is already defined globally in OnboardingDataService.swift
+// No redirect needed - removing circular reference

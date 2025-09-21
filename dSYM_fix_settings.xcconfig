@@ -1,0 +1,25 @@
+// dSYM Fix Configuration
+// Use this xcconfig file or apply these settings directly to your Xcode project
+
+// 1. Debug Information Format - Generate dSYM files for both Debug and Release
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+
+// 2. Strip Debug Symbols During Copy - NO for Debug, YES for Release
+STRIP_DEBUG_SYMBOLS_DURING_COPY[config=Debug] = NO
+STRIP_DEBUG_SYMBOLS_DURING_COPY[config=Release] = YES
+
+// 3. Disable Bitcode (deprecated and can cause empty dSYM issues)
+ENABLE_BITCODE = NO
+
+// 4. Ensure debug symbols are preserved in linked binaries
+STRIP_INSTALLED_PRODUCT[config=Debug] = NO
+STRIP_INSTALLED_PRODUCT[config=Release] = YES
+
+// 5. Additional settings for proper dSYM generation
+GCC_GENERATE_DEBUGGING_SYMBOLS = YES
+CLANG_DEBUG_INFORMATION_LEVEL[config=Debug] = default
+CLANG_DEBUG_INFORMATION_LEVEL[config=Release] = default
+
+// 6. Dead code stripping settings
+DEAD_CODE_STRIPPING[config=Debug] = NO
+DEAD_CODE_STRIPPING[config=Release] = YES

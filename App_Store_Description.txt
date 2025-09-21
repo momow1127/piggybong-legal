@@ -1,0 +1,138 @@
+PiggyBong - App Store Description
+===============================
+
+TITLE (30 characters max):
+PiggyBong: Kpop Fan Budget
+
+SUBTITLE (30 characters max):  
+Smart Priority & Expense Plan
+
+KEYWORDS (100 characters max):
+kpop,fan,budget,planner,expense,tracker,concert,album,merch,priority,savings,idol,korea,trip
+
+DESCRIPTION:
+
+Plan Your K-pop Dreams Within Budget 💜
+
+Love K-pop but stressed about spending? PiggyBong is the first budgeting app designed specifically for K-pop fans. Whether you're saving for concert tickets, collecting albums, or planning a trip to Korea, achieve all your fan dreams without breaking the bank.
+
+🎯 SMART PRIORITY PLANNING
+• Drag-and-drop interface to rank your fan spending priorities
+• Organize concerts, albums, merch, subscriptions, and Korea trips
+• Flexible vs. fixed priority settings for different goals
+• Real-time budget reallocation as priorities change
+
+🤖 AI-POWERED BUDGET RECOMMENDATIONS  
+• Personalized budget breakdowns based on your fan preferences
+• Smart allocation across concerts, merchandise, and experiences
+• Monthly spending estimates tailored to your favorite groups
+• Intelligent suggestions to maximize your fan budget
+
+📊 PROGRESS TRACKING DASHBOARD
+• Visual breakdown of your K-pop spending allocations
+• Track progress toward each fan goal with timelines
+• Monitor when you'll achieve your biggest dreams
+• Celebrate milestones as you reach savings targets
+
+🎪 STAY UPDATED WITH YOUR FANDOM
+• Concert and event tracking for your favorite groups
+• News feed integration with latest updates
+• Smart notifications for budget opportunities
+• Never miss important announcements that affect your planning
+
+✨ WHY K-POP FANS LOVE PIGGYBLACKPINK
+★ "Finally, an app that understands fan priorities! Helped me save for both BLACKPINK's tour AND their new album." - Sarah M.
+
+★ "The drag-and-drop feature is genius. I can instantly see if I should buy that photocard or save for the concert." - Alex K.
+
+★ "Saved enough for my Korea trip in just 6 months using PiggyBong's smart recommendations!" - Maria L.
+
+🎵 PERFECT FOR:
+• Concert-goers saving for multiple tour dates
+• Album collectors managing release budgets  
+• Merchandise enthusiasts avoiding impulse buys
+• Korea trip planners building travel funds
+• Multi-stan fans juggling different group priorities
+• Students balancing fan life with limited budgets
+
+💡 KEY FEATURES:
+• Interactive onboarding with favorite group selection
+• Dynamic priority management with visual feedback
+• Progressive dashboard that adapts to your journey stage
+• Secure data sync across all your devices
+• Beautiful, K-pop inspired design that feels like home
+
+📱 SEAMLESS EXPERIENCE:
+Built with SwiftUI for smooth iOS performance. Syncs securely with cloud backup so your plans are always safe. Works perfectly on iPhone and iPad.
+
+🌟 START YOUR SMART FAN JOURNEY
+Join thousands of K-pop fans who've taken control of their spending without sacrificing their passion. Download PiggyBong today and turn your fan dreams into achievable goals.
+
+Plan smart. Love harder. Stay joyful. ✨
+
+---
+
+PROMOTIONAL TEXT (170 characters max):
+The first budget app for K-pop fans! Plan concerts, albums & Korea trips smartly. AI recommendations + drag-and-drop priorities. Download free!
+
+SHORT DESCRIPTION (80 characters max):  
+Smart budget planner designed specifically for K-pop fans worldwide.
+
+WHAT'S NEW (Recently Updated):
+🎉 NEW: Enhanced concert tracking with venue maps
+🤖 IMPROVED: Smarter AI budget recommendations  
+💜 ADDED: Dark mode support for comfortable night planning
+🔧 FIXED: Various performance improvements and bug fixes
+
+PROMOTIONAL SCREENSHOTS CAPTIONS:
+
+Screenshot 1: "Plan Your K-pop Dreams Within Budget"
+Screenshot 2: "Organize Fan Spending by Priority" 
+Screenshot 3: "AI-Powered Budget Recommendations"
+Screenshot 4: "Track Progress Toward Fan Goals"
+Screenshot 5: "Start Your Smart Fan Journey Today"
+
+APP PREVIEW VIDEO SCRIPT (30 seconds):
+[0-3s] Hook: "Love K-pop but stressed about spending?"
+[3-8s] Problem: Shows chaotic spending vs organized planning
+[8-15s] Solution: PiggyBong app interface introduction
+[15-25s] Features: Quick showcase of drag-drop, AI, tracking
+[25-30s] CTA: "Download PiggyBong - Plan smart, love harder"
+
+CATEGORY SELECTION:
+Primary: Finance
+Secondary: Lifestyle
+
+TARGET AUDIENCE:
+• Age: 16-35 years old
+• Gender: All genders (slightly female-skewed based on K-pop demographics)
+• Interests: K-pop, Korean culture, budgeting, concerts, merchandise collecting
+• Behavior: Active social media users, community-oriented, value-conscious fans
+• Income: Students to young professionals with discretionary spending
+
+LOCALIZATION PRIORITY:
+1. English (US) - Primary market
+2. Korean - Native market for K-pop culture
+3. Spanish - Large K-pop fanbase in Latin America
+4. Japanese - Significant market proximity to Korea
+5. Portuguese (Brazil) - Growing K-pop market
+6. French - European K-pop community
+
+REVIEW GENERATION STRATEGY:
+• Prompt after successful goal achievement
+• Ask for reviews after positive in-app interactions
+• Time prompts when users are most engaged
+• Provide easy 1-tap review submission
+• Respond personally to all reviews within 24 hours
+
+COMPETITIVE POSITIONING:
+• vs Mint/YNAB: "First budget app designed for K-pop fans"
+• vs K-pop apps: "Goes beyond community to actual financial planning"  
+• vs Generic budgeting: "Understands fan priorities like concerts and albums"
+
+SUCCESS METRICS TO TRACK:
+• Keyword rankings for "kpop budget", "fan budgeting"
+• Conversion rate from App Store views to downloads
+• Review ratings and velocity (target 4.5+ stars, 5+ reviews/week)
+• Organic download percentage (target 70%+)
+• Feature rate by Apple editorial team

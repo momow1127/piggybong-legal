@@ -1,0 +1,226 @@
+import { serve } from "https://deno.land/std@0.224.0/http/server.ts"
+import { corsHeaders } from '../_shared/cors.ts'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+// Initialize Supabase client
+const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+const revenucatWebhookSecret = Deno.env.get('REVENUECAT_WEBHOOK_SECRET')!
+
+const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
+interface RevenueCatWebhookEvent {
+  api_version: string
+  event: {
+    type: string
+    id: string
+    event_timestamp_ms: number
+    app_user_id: string
+    original_app_user_id: string
+    product_id: string
+    period_type: string
+    purchased_at_ms: number
+    expiration_at_ms?: number
+    environment: string
+    entitlement_id?: string
+    entitlement_ids: string[]
+    presented_offering_id?: string
+    transaction_id: string
+    original_transaction_id: string
+    is_family_share: boolean
+    country_code: string
+    app_id: string
+    aliases: string[]
+    takehome_percentage: number
+    proceeds_usd: number
+    price?: number
+    currency?: string
+    subscriber_attributes?: Record<string, any>
+    store?: string
+  }
+}
+
+// Subscription event types we care about
+const SUBSCRIPTION_EVENTS = {
+  INITIAL_PURCHASE: 'INITIAL_PURCHASE',
+  RENEWAL: 'RENEWAL',
+  CANCELLATION: 'CANCELLATION',
+  EXPIRATION: 'EXPIRATION',
+  BILLING_ISSUE: 'BILLING_ISSUE',
+  PRODUCT_CHANGE: 'PRODUCT_CHANGE'
+}
+
+serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
+
+  try {
+    // Verify webhook signature (security best practice)
+    const signature = req.headers.get('Authorization')
+    if (!signature || !signature.includes(revenucatWebhookSecret)) {
+      throw new Error('Invalid webhook signature')
+    }
+
+    const body = await req.json() as RevenueCatWebhookEvent
+    const event = body.event
+
+    console.log(`Processing RevenueCat webhook: ${event.type} for user: ${event.app_user_id}`)
+
+    // Get user by RevenueCat user ID (assuming it matches our user ID)
+    const { data: user, error: userError } = await supabase
+      .from('users')
+      .select('id')
+      .eq('id', event.app_user_id)
+      .single()
+
+    if (userError || !user) {
+      console.error('User not found:', event.app_user_id)
+      throw new Error('User not found')
+    }
+
+    let planType = 'free'
+    let subscriptionStatus = 'inactive'
+
+    // Determine plan type and status based on event
+    switch (event.type) {
+      case SUBSCRIPTION_EVENTS.INITIAL_PURCHASE:
+      case SUBSCRIPTION_EVENTS.RENEWAL:
+        planType = 'paid'
+        subscriptionStatus = 'active'
+        break
+        
+      case SUBSCRIPTION_EVENTS.CANCELLATION:
+        // Keep as paid until expiration
+        planType = 'paid'
+        subscriptionStatus = 'cancelled'
+        break
+        
+      case SUBSCRIPTION_EVENTS.EXPIRATION:
+        planType = 'free'
+        subscriptionStatus = 'inactive'
+        break
+        
+      case SUBSCRIPTION_EVENTS.BILLING_ISSUE:
+        planType = 'paid' // Keep current plan during billing issues
+        subscriptionStatus = 'past_due'
+        break
+        
+      case SUBSCRIPTION_EVENTS.PRODUCT_CHANGE:
+        planType = 'paid'
+        subscriptionStatus = 'active'
+        break
+        
+      default:
+        console.log(`Unhandled event type: ${event.type}`)
+        return new Response(JSON.stringify({ success: true, message: 'Event ignored' }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        })
+    }
+
+    // Prepare RevenueCat data for storage
+    const revenucatData = {
+      user_id: event.app_user_id,
+      original_transaction_id: event.original_transaction_id,
+      product_identifier: event.product_id,
+      purchase_date: new Date(event.purchased_at_ms).toISOString(),
+      expiration_date: event.expiration_at_ms ? new Date(event.expiration_at_ms).toISOString() : null,
+      transaction_id: event.transaction_id,
+      environment: event.environment,
+      country_code: event.country_code,
+      proceeds_usd: event.proceeds_usd,
+      currency: event.currency,
+      price: event.price
+    }
+
+    // Update user subscription using our stored procedure
+    const { data: updateResult, error: updateError } = await supabase
+      .rpc('update_user_subscription', {
+        p_user_id: user.id,
+        p_plan_type: planType,
+        p_revenuecat_data: revenucatData
+      })
+
+    if (updateError) {
+      console.error('Failed to update subscription:', updateError)
+      throw updateError
+    }
+
+    const result = updateResult[0]
+
+    // Handle downgrade scenario
+    if (result.requires_goal_selection && planType === 'free') {
+      console.log(`User ${user.id} requires goal selection after downgrade`)
+      
+      // You could send a push notification here or flag the user
+      // For MVP, we'll just log it and let the app handle it when user opens it
+    }
+
+    // Log successful processing
+    console.log(`Successfully processed ${event.type} for user ${user.id}: ${result.message}`)
+
+    // Analytics tracking (optional)
+    await trackSubscriptionEvent(user.id, event.type, planType, revenucatData)
+
+    return new Response(
+      JSON.stringify({ 
+        success: true, 
+        message: result.message,
+        plan_type: planType,
+        requires_goal_selection: result.requires_goal_selection
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      }
+    )
+
+  } catch (error) {
+    console.error('Webhook processing error:', error)
+    
+    return new Response(
+      JSON.stringify({ 
+        success: false,
+        error: error.message || 'Internal server error'
+      }),
+      { 
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      }
+    )
+  }
+})
+
+// Analytics helper function
+async function trackSubscriptionEvent(
+  userId: string, 
+  eventType: string, 
+  planType: string, 
+  revenucatData: any
+) {
+  try {
+    // Track subscription events for analytics
+    await supabase
+      .from('user_subscription_events')
+      .insert({
+        user_id: userId,
+        event_type: eventType,
+        plan_type: planType,
+        revenue_usd: revenucatData.proceeds_usd || 0,
+        product_id: revenucatData.product_identifier,
+        metadata: {
+          original_transaction_id: revenucatData.original_transaction_id,
+          country_code: revenucatData.country_code,
+          environment: revenucatData.environment
+        }
+      })
+  } catch (error) {
+    console.error('Failed to track subscription event:', error)
+    // Don't throw - analytics shouldn't break the main flow
+  }
+}
+
+// Helper function to determine if subscription is still active
+function isSubscriptionActive(expirationDate: string | null): boolean {
+  if (!expirationDate) return false
+  return new Date(expirationDate) > new Date()
+}

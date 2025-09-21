@@ -1,0 +1,189 @@
+import { serve } from "https://deno.land/std@0.224.0/http/server.ts"
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1'
+import { corsHeaders } from '../_shared/cors.ts'
+
+interface CleanupResponse {
+  success: boolean
+  message: string
+  deleted_count?: number
+  stats?: {
+    expired_codes: number
+    old_verified_codes: number
+    total_cleaned: number
+  }
+}
+
+serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
+
+  try {
+    // Initialize Supabase client with service role key for admin operations
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
+      }
+    )
+
+    console.log('Starting cleanup of expired verification codes...')
+    const startTime = Date.now()
+
+    // Get stats before cleanup
+    const { data: beforeStats, error: beforeStatsError } = await supabaseClient
+      .from('verification_codes')
+      .select('id, expires_at, verified_at, created_at')
+
+    if (beforeStatsError) {
+      console.error('Error getting before stats:', beforeStatsError)
+    }
+
+    const totalBefore = beforeStats?.length || 0
+    const expiredBefore = beforeStats?.filter(code => 
+      new Date(code.expires_at) < new Date(Date.now() - 60 * 60 * 1000) // 1 hour ago
+    ).length || 0
+    const oldVerifiedBefore = beforeStats?.filter(code => 
+      code.verified_at && new Date(code.verified_at) < new Date(Date.now() - 24 * 60 * 60 * 1000) // 24 hours ago
+    ).length || 0
+
+    console.log(`Before cleanup: ${totalBefore} total codes, ${expiredBefore} expired, ${oldVerifiedBefore} old verified`)
+
+    // Clean up expired codes (older than 1 hour)
+    const { error: expiredError } = await supabaseClient
+      .from('verification_codes')
+      .delete()
+      .lt('expires_at', new Date(Date.now() - 60 * 60 * 1000).toISOString())
+
+    if (expiredError) {
+      console.error('Error cleaning up expired codes:', expiredError)
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'Failed to cleanup expired codes'
+        } as CleanupResponse),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      )
+    }
+
+    // Clean up old verified codes (older than 24 hours)
+    const { error: verifiedError } = await supabaseClient
+      .from('verification_codes')
+      .delete()
+      .not('verified_at', 'is', null)
+      .lt('verified_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
+
+    if (verifiedError) {
+      console.error('Error cleaning up old verified codes:', verifiedError)
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'Failed to cleanup old verified codes'
+        } as CleanupResponse),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      )
+    }
+
+    // Clean up codes with too many failed attempts (older than 1 hour)
+    const { error: failedAttemptsError } = await supabaseClient
+      .from('verification_codes')
+      .delete()
+      .gte('attempt_count', 5)
+      .lt('created_at', new Date(Date.now() - 60 * 60 * 1000).toISOString())
+      .is('verified_at', null)
+
+    if (failedAttemptsError) {
+      console.error('Error cleaning up failed attempt codes:', failedAttemptsError)
+    }
+
+    // Get stats after cleanup
+    const { data: afterStats, error: afterStatsError } = await supabaseClient
+      .from('verification_codes')
+      .select('id')
+
+    if (afterStatsError) {
+      console.error('Error getting after stats:', afterStatsError)
+    }
+
+    const totalAfter = afterStats?.length || 0
+    const totalCleaned = totalBefore - totalAfter
+
+    const endTime = Date.now()
+    const duration = endTime - startTime
+
+    const stats = {
+      expired_codes: expiredBefore,
+      old_verified_codes: oldVerifiedBefore,
+      total_cleaned: totalCleaned
+    }
+
+    console.log(`Cleanup completed in ${duration}ms:`)
+    console.log(`  - Cleaned ${totalCleaned} total codes`)
+    console.log(`  - Remaining codes: ${totalAfter}`)
+    console.log(`  - Stats:`, stats)
+
+    // Log cleanup activity for monitoring
+    const logEntry = {
+      timestamp: new Date().toISOString(),
+      action: 'cleanup_verification_codes',
+      duration_ms: duration,
+      stats: stats,
+      success: true
+    }
+
+    // Optional: Store cleanup logs in a separate table for monitoring
+    try {
+      await supabaseClient
+        .from('system_logs')
+        .insert(logEntry)
+    } catch (logError) {
+      console.warn('Could not log cleanup activity:', logError)
+      // Don't fail the cleanup if logging fails
+    }
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: `Cleanup completed successfully. Removed ${totalCleaned} expired codes.`,
+        deleted_count: totalCleaned,
+        stats: stats
+      } as CleanupResponse),
+      {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      }
+    )
+
+  } catch (error) {
+    console.error('Error in cleanup-expired-codes:', error)
+    
+    return new Response(
+      JSON.stringify({
+        success: false,
+        message: 'Internal server error during cleanup',
+      } as CleanupResponse),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      }
+    )
+  }
+})
+
+// Optional: Add a health check endpoint
+if (Deno.env.get('DENO_DEPLOYMENT_ID')) {
+  console.log('Cleanup function deployed successfully')
+  console.log('This function should be called periodically via cron job')
+  console.log('Recommended schedule: Every 30 minutes')
+}

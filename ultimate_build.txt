@@ -1,0 +1,406 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project FanPlan.xcodeproj -scheme "Piggy Bong" -destination "platform=iOS Simulator,name=iPhone 16" build
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  swift-concurrency-extras: https://github.com/pointfreeco/swift-concurrency-extras @ 1.3.1
+  RevenueCat: https://github.com/RevenueCat/purchases-ios.git @ 5.35.0
+  xctest-dynamic-overlay: https://github.com/pointfreeco/xctest-dynamic-overlay @ 1.6.0
+  swift-asn1: https://github.com/apple/swift-asn1.git @ 1.4.0
+  swift-clocks: https://github.com/pointfreeco/swift-clocks @ 1.0.6
+  Supabase: https://github.com/supabase/supabase-swift @ 2.30.2
+  swift-crypto: https://github.com/apple/swift-crypto.git @ 3.13.2
+  swift-http-types: https://github.com/apple/swift-http-types.git @ 1.4.0
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:35AA94FF-5808-417D-A174-CECD7D93FF17, OS:18.4, name:iPhone 16 }
+{ platform:iOS Simulator, arch:x86_64, id:35AA94FF-5808-417D-A174-CECD7D93FF17, OS:18.4, name:iPhone 16 }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (4 targets)
+    Target 'Piggy Bong' in project 'FanPlan'
+        ➜ Explicit dependency on target 'RevenueCat' in project 'RevenueCat'
+    Target 'RevenueCat' in project 'RevenueCat'
+        ➜ Explicit dependency on target 'RevenueCat' in project 'RevenueCat'
+        ➜ Explicit dependency on target 'RevenueCat_RevenueCat' in project 'RevenueCat'
+    Target 'RevenueCat' in project 'RevenueCat'
+        ➜ Explicit dependency on target 'RevenueCat_RevenueCat' in project 'RevenueCat'
+    Target 'RevenueCat_RevenueCat' in project 'RevenueCat' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+Build description signature: f9c03c44e49bd76630648778775373da
+Build description path: /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/XCBuildData/f9c03c44e49bd76630648778775373da.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk /Users/momow1127/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.4-22E235-71825a6d136aa4733edcbe86ece5525b.sdkstatcache
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk -o /Users/momow1127/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.4-22E235-71825a6d136aa4733edcbe86ece5525b.sdkstatcache
+
+ProcessInfoPlistFile /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator/RevenueCat_RevenueCat.bundle/Info.plist /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/RevenueCat.build/Debug-iphonesimulator/RevenueCat_RevenueCat.build/empty-RevenueCat_RevenueCat.plist (in target 'RevenueCat_RevenueCat' from project 'RevenueCat')
+    cd /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/SourcePackages/checkouts/purchases-ios
+    builtin-infoPlistUtility /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/RevenueCat.build/Debug-iphonesimulator/RevenueCat_RevenueCat.build/empty-RevenueCat_RevenueCat.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform iphonesimulator -o /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator/RevenueCat_RevenueCat.bundle/Info.plist
+
+WriteAuxiliaryFile /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy\ Bong.SwiftFileList (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    write-file /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy\ Bong.SwiftFileList
+
+WriteAuxiliaryFile /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy\ Bong.SwiftConstValuesFileList (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    write-file /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy\ Bong.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy\ Bong.LinkFileList (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    write-file /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy\ Bong.LinkFileList
+
+SwiftDriver RevenueCat normal arm64 com.apple.xcode.tools.swift.compiler (in target 'RevenueCat' from project 'RevenueCat')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan.xcodeproj
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name RevenueCat -Onone -enforce-exclusivity\=checked @/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/RevenueCat.build/Debug-iphonesimulator/RevenueCat.build/Objects-normal/arm64/RevenueCat.SwiftFileList -DSWIFT_PACKAGE -DDEBUG -DXcode -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk -target arm64-apple-ios13.0-simulator -g -module-cache-path /Users/momow1127/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -suppress-warnings -index-store-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Index.noindex/DataStore -swift-version 5 -I /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator -I /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/RevenueCat.build/Debug-iphonesimulator/RevenueCat.build/Objects-normal/arm64 -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/momow1127/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.4-22E235-71825a6d136aa4733edcbe86ece5525b.sdkstatcache -output-file-map /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/RevenueCat.build/Debug-iphonesimulator/RevenueCat.build/Objects-normal/arm64/RevenueCat-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/RevenueCat.build/Debug-iphonesimulator/RevenueCat.build/Objects-normal/arm64/RevenueCat.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/momow1127/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -package-name purchases_ios -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/RevenueCat.build/Debug-iphonesimulator/RevenueCat.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/RevenueCat.build/Debug-iphonesimulator/RevenueCat.build/Objects-normal/arm64/RevenueCat_const_extract_protocols.json -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/RevenueCat.build/Debug-iphonesimulator/RevenueCat.build/DerivedSources-normal/arm64 -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/RevenueCat.build/Debug-iphonesimulator/RevenueCat.build/DerivedSources/arm64 -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/RevenueCat.build/Debug-iphonesimulator/RevenueCat.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/RevenueCat.build/Debug-iphonesimulator/RevenueCat.build/Objects-normal/arm64/RevenueCat-Swift.h -working-directory /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan.xcodeproj -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver Piggy\ Bong normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Piggy_Bong -Onone -enforce-exclusivity\=checked @/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy\ Bong.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk -target arm64-apple-ios18.4-simulator -g -module-cache-path /Users/momow1127/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Index.noindex/DataStore -swift-version 5 -I /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator -F /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64 -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/momow1127/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.4-22E235-71825a6d136aa4733edcbe86ece5525b.sdkstatcache -output-file-map /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy\ Bong-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy_Bong.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/momow1127/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy\ Bong_const_extract_protocols.json -Xcc -iquote -Xcc /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Piggy\ Bong-generated-files.hmap -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Piggy\ Bong-own-target-headers.hmap -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Piggy\ Bong-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/FanPlan-53290c13ec0670811797c78566c965fd-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Piggy\ Bong-project-headers.hmap -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/DerivedSources-normal/arm64 -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/DerivedSources/arm64 -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy_Bong-Swift.h -working-directory /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main -experimental-emit-module-separately -disable-cmo
+
+CompileAssetCatalogVariant thinned /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator/Piggy\ Bong.app /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Assets.xcassets (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Assets.xcassets --compile /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/assetcatalog_dependencies_thinned --output-partial-info-plist /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --accent-color AccentColor --compress-pngs --enable-on-demand-resources YES --filter-for-thinning-device-configuration iPhone17,3 --filter-for-device-os-version 18.4 --development-region en --target-device iphone --target-device ipad --minimum-deployment-target 18.4 --platform iphonesimulator
+
+SwiftCompile normal arm64 Compiling\ PriorityPlanningView.swift,\ DesignTokens.swift,\ User.swift,\ IdolUpdateService.swift,\ Date+Extensions.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PriorityPlanningView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/DesignTokens.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/User.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/IdolUpdateService.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Date+Extensions.swift (in target 'Piggy Bong' from project 'FanPlan')
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PriorityPlanningView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/DesignTokens.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/User.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/IdolUpdateService.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Date+Extensions.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ Piggy_Bong (in target 'Piggy Bong' from project 'FanPlan')
+
+EmitSwiftModule normal arm64 (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/EnhancedPaywallView.swift:919:14: warning: previewDisplayName is ignored in a #Preview macro. Provide the name to the macro initializer, e.g. `#Preview("preview name")` (from macro 'Preview')
+            .previewDisplayName("Default")
+             ^
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/EnhancedPaywallView.swift:923:14: warning: previewDisplayName is ignored in a #Preview macro. Provide the name to the macro initializer, e.g. `#Preview("preview name")` (from macro 'Preview')
+            .previewDisplayName("4th Artist Limit")
+             ^
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/EnhancedPaywallView.swift:927:14: warning: previewDisplayName is ignored in a #Preview macro. Provide the name to the macro initializer, e.g. `#Preview("preview name")` (from macro 'Preview')
+            .previewDisplayName("AI Coaching")
+             ^
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/OnboardingService.swift:455:30: warning: expression implicitly coerced from 'String?' to 'Any'
+                "artist_id": selectedArtists.first?.id.uuidString, // Link to top artist
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/OnboardingService.swift:455:56: note: provide a default value to avoid this warning
+                "artist_id": selectedArtists.first?.id.uuidString, // Link to top artist
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+                                                                  ?? <#default value#>
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/OnboardingService.swift:455:56: note: force-unwrap the value to avoid this warning
+                "artist_id": selectedArtists.first?.id.uuidString, // Link to top artist
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+                                                                 !
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/OnboardingService.swift:455:56: note: explicitly cast to 'Any' with 'as Any' to silence this warning
+                "artist_id": selectedArtists.first?.id.uuidString, // Link to top artist
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+                                                                  as Any
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/OnboardingService.swift:459:38: warning: expression implicitly coerced from 'String?' to 'Any'
+                "countdown_context": generateCountdownContext(for: template)
+                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/OnboardingService.swift:459:38: note: provide a default value to avoid this warning
+                "countdown_context": generateCountdownContext(for: template)
+                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                             ?? <#default value#>
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/OnboardingService.swift:459:38: note: force-unwrap the value to avoid this warning
+                "countdown_context": generateCountdownContext(for: template)
+                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                            !
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/OnboardingService.swift:459:38: note: explicitly cast to 'Any' with 'as Any' to silence this warning
+                "countdown_context": generateCountdownContext(for: template)
+                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                             as Any
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:99:33: warning: expression implicitly coerced from 'String?' to 'Any'
+                "context_note": purchase.contextNote.isEmpty ? nil : purchase.contextNote,
+                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:99:62: note: provide a default value to avoid this warning
+                "context_note": purchase.contextNote.isEmpty ? nil : purchase.contextNote,
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                                          ?? <#default value#>
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:99:62: note: force-unwrap the value to avoid this warning
+                "context_note": purchase.contextNote.isEmpty ? nil : purchase.contextNote,
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                                         !
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:99:62: note: explicitly cast to 'Any' with 'as Any' to silence this warning
+                "context_note": purchase.contextNote.isEmpty ? nil : purchase.contextNote,
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                                          as Any
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:102:35: warning: expression implicitly coerced from 'String?' to 'Any'
+                "venue_location": purchase.venueLocation.isEmpty ? nil : purchase.venueLocation,
+                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:102:66: note: provide a default value to avoid this warning
+                "venue_location": purchase.venueLocation.isEmpty ? nil : purchase.venueLocation,
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                                                ?? <#default value#>
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:102:66: note: force-unwrap the value to avoid this warning
+                "venue_location": purchase.venueLocation.isEmpty ? nil : purchase.venueLocation,
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                                               !
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:102:66: note: explicitly cast to 'Any' with 'as Any' to silence this warning
+                "venue_location": purchase.venueLocation.isEmpty ? nil : purchase.venueLocation,
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                                                as Any
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:103:34: warning: expression implicitly coerced from 'String?' to 'Any'
+                "album_version": purchase.albumVersion.isEmpty ? nil : purchase.albumVersion
+                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:103:64: note: provide a default value to avoid this warning
+                "album_version": purchase.albumVersion.isEmpty ? nil : purchase.albumVersion
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                                             ?? <#default value#>
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:103:64: note: force-unwrap the value to avoid this warning
+                "album_version": purchase.albumVersion.isEmpty ? nil : purchase.albumVersion
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                                            !
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:103:64: note: explicitly cast to 'Any' with 'as Any' to silence this warning
+                "album_version": purchase.albumVersion.isEmpty ? nil : purchase.albumVersion
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                                             as Any
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:140:25: warning: expression implicitly coerced from 'String?' to 'Any'
+                "note": goalProgress.note.isEmpty ? nil : goalProgress.note
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:140:51: note: provide a default value to avoid this warning
+                "note": goalProgress.note.isEmpty ? nil : goalProgress.note
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                            ?? <#default value#>
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:140:51: note: force-unwrap the value to avoid this warning
+                "note": goalProgress.note.isEmpty ? nil : goalProgress.note
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                           !
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift:140:51: note: explicitly cast to 'Any' with 'as Any' to silence this warning
+                "note": goalProgress.note.isEmpty ? nil : goalProgress.note
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                            as Any
+
+SwiftCompile normal arm64 Compiling\ GoalSetupView.swift,\ PermissionRequestView.swift,\ SupabaseService.swift,\ ArtistSelectionView.swift,\ IdolUpdateModels.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/GoalSetupView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PermissionRequestView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/SupabaseService.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/ArtistSelectionView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/IdolUpdateModels.swift (in target 'Piggy Bong' from project 'FanPlan')
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/GoalSetupView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PermissionRequestView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/SupabaseService.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/ArtistSelectionView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/IdolUpdateModels.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 Compiling\ DashboardComponents.swift,\ DashboardModels.swift,\ OnboardingCoordinator.swift,\ EnhancedPaywallView.swift,\ Purchase.swift,\ MinimalApp.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/DashboardComponents.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/DashboardModels.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/OnboardingCoordinator.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/EnhancedPaywallView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Purchase.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/MinimalApp.swift (in target 'Piggy Bong' from project 'FanPlan')
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/DashboardComponents.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/DashboardModels.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/OnboardingCoordinator.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/EnhancedPaywallView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Purchase.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/MinimalApp.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 Compiling\ Double+Extensions.swift,\ PremiumGate.swift,\ ValidationService.swift,\ Artist.swift,\ GoalProgressSheet.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Double+Extensions.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PremiumGate.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/ValidationService.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Artist.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/GoalProgressSheet.swift (in target 'Piggy Bong' from project 'FanPlan')
+Failed frontend command:
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -c /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/DashboardComponents.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/DashboardModels.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/OnboardingCoordinator.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/EnhancedPaywallView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Purchase.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/MinimalApp.swift -primary-file /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Double+Extensions.swift -primary-file /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PremiumGate.swift -primary-file /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/ValidationService.swift -primary-file /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Artist.swift -primary-file /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/GoalProgressSheet.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/FanExperienceModels.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/IntroCardsView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/IdolNewsFeedView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PaywallView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/SmartAllocationService.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/FanHomeDashboardView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Config.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/RevenueCatConfig.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Budget.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/OnboardingContainer.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PriorityPlanningView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/DesignTokens.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/User.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/IdolUpdateService.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Date+Extensions.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/OnboardingService.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Secrets.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/DashboardViewModel.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/OnboardingErrorHandler.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/FanDashboardService.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/QuickAddView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/BudgetSelectionView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/NameInputView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/EnhancedOnboardingView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PriorityModels.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/CleanDashboardView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/WelcomeView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/AuthenticationService.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/LoadingView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/FanPlanApp.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/GoalSetupView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PermissionRequestView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/SupabaseService.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/ArtistSelectionView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/IdolUpdateModels.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/DatabaseModels.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/OnboardingModels.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/RevenueCatManager.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/AuthenticationView.swift /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/DerivedSources/GeneratedAssetSymbols.swift -supplementary-output-file-map /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/supplementaryOutputs-2 -emit-localized-strings -emit-localized-strings-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64 -target arm64-apple-ios18.4-simulator -Xllvm -aarch64-use-tbi -enable-objc-interop -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk -I /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator -F /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator -no-color-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=5 -module-cache-path /Users/momow1127/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -profile-generate -profile-coverage-mapping -swift-version 5 -enforce-exclusivity\=checked -Onone -D DEBUG -serialize-debugging-options -const-gather-protocols-file /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy\ Bong_const_extract_protocols.json -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -empty-abi-descriptor -validate-clang-modules-once -clang-build-session-file /Users/momow1127/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift -enable-anonymous-context-mangled-names -file-compilation-dir /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main -Xcc -ivfsstatcache -Xcc /Users/momow1127/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.4-22E235-71825a6d136aa4733edcbe86ece5525b.sdkstatcache -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/swift-overrides.hmap -Xcc -iquote -Xcc /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Piggy\ Bong-generated-files.hmap -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Piggy\ Bong-own-target-headers.hmap -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Piggy\ Bong-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/FanPlan-53290c13ec0670811797c78566c965fd-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Piggy\ Bong-project-headers.hmap -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/DerivedSources-normal/arm64 -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/DerivedSources/arm64 -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/DerivedSources -Xcc -DDEBUG\=1 -module-name Piggy_Bong -frontend-parseable-output -disable-clang-spi -target-sdk-version 18.4 -target-sdk-name iphonesimulator18.4 -external-plugin-path /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -external-plugin-path /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/lib/swift/host/plugins\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -in-process-plugin-server-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/lib/swift/host/plugins -o /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Double+Extensions.o -o /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/PremiumGate.o -o /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/ValidationService.o -o /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Artist.o -o /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/GoalProgressSheet.o -index-unit-output-path /FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Double+Extensions.o -index-unit-output-path /FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/PremiumGate.o -index-unit-output-path /FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/ValidationService.o -index-unit-output-path /FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Artist.o -index-unit-output-path /FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/GoalProgressSheet.o -index-store-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Index.noindex/DataStore -index-system-modules
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Double+Extensions.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PremiumGate.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/EnhancedPaywallView.swift:919:14: warning: previewDisplayName is ignored in a #Preview macro. Provide the name to the macro initializer, e.g. `#Preview("preview name")` (from macro 'Preview')
+            .previewDisplayName("Default")
+             ^
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/EnhancedPaywallView.swift:923:14: warning: previewDisplayName is ignored in a #Preview macro. Provide the name to the macro initializer, e.g. `#Preview("preview name")` (from macro 'Preview')
+            .previewDisplayName("4th Artist Limit")
+             ^
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/EnhancedPaywallView.swift:927:14: warning: previewDisplayName is ignored in a #Preview macro. Provide the name to the macro initializer, e.g. `#Preview("preview name")` (from macro 'Preview')
+            .previewDisplayName("AI Coaching")
+             ^
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/ValidationService.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Artist.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/GoalProgressSheet.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/GoalProgressSheet.swift:254:22: warning: 'onChange(of:perform:)' was deprecated in iOS 17.0: Use `onChange` with a two or zero parameter action closure instead.
+                    .onChange(of: progressData.amount) { _ in
+                     ^
+/Users/momow1127/Desktop/Desktop/Portfolio/My Project/AI/PiggyBong-main/FanPlan/GoalProgressSheet.swift:343:82: error: result values in '? :' expression have mismatching types 'LinearGradient' and 'Color'
+                    .fill(progressData.isValid && !isSubmitting ? PiggyGradients.primaryButton : Color.gray.opacity(0.5))
+                                                                  ~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+
+SwiftCompile normal arm64 Compiling\ DatabaseModels.swift,\ OnboardingModels.swift,\ RevenueCatManager.swift,\ AuthenticationView.swift,\ GeneratedAssetSymbols.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/DatabaseModels.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/OnboardingModels.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/RevenueCatManager.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/AuthenticationView.swift /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'Piggy Bong' from project 'FanPlan')
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/DatabaseModels.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/OnboardingModels.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/RevenueCatManager.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/AuthenticationView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 Compiling\ CleanDashboardView.swift,\ WelcomeView.swift,\ AuthenticationService.swift,\ LoadingView.swift,\ FanPlanApp.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/CleanDashboardView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/WelcomeView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/AuthenticationService.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/LoadingView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/FanPlanApp.swift (in target 'Piggy Bong' from project 'FanPlan')
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/CleanDashboardView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/WelcomeView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/AuthenticationService.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/LoadingView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/FanPlanApp.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 Compiling\ QuickAddView.swift,\ BudgetSelectionView.swift,\ NameInputView.swift,\ EnhancedOnboardingView.swift,\ PriorityModels.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/QuickAddView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/BudgetSelectionView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/NameInputView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/EnhancedOnboardingView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PriorityModels.swift (in target 'Piggy Bong' from project 'FanPlan')
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/QuickAddView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/BudgetSelectionView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/NameInputView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/EnhancedOnboardingView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PriorityModels.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 Compiling\ FanExperienceModels.swift,\ IntroCardsView.swift,\ IdolNewsFeedView.swift,\ PaywallView.swift,\ SmartAllocationService.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/FanExperienceModels.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/IntroCardsView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/IdolNewsFeedView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PaywallView.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/SmartAllocationService.swift (in target 'Piggy Bong' from project 'FanPlan')
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/FanExperienceModels.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/IntroCardsView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/IdolNewsFeedView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PaywallView.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/SmartAllocationService.swift (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ RevenueCat (in target 'RevenueCat' from project 'RevenueCat')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for Piggy_Bong (in target 'Piggy Bong' from project 'FanPlan')
+
+SwiftDriver\ Compilation\ Requirements Piggy\ Bong normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Piggy Bong' from project 'FanPlan')
+    cd /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Piggy_Bong -Onone -enforce-exclusivity\=checked @/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy\ Bong.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk -target arm64-apple-ios18.4-simulator -g -module-cache-path /Users/momow1127/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Index.noindex/DataStore -swift-version 5 -I /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator -F /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64 -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/momow1127/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.4-22E235-71825a6d136aa4733edcbe86ece5525b.sdkstatcache -output-file-map /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy\ Bong-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy_Bong.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/momow1127/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy\ Bong_const_extract_protocols.json -Xcc -iquote -Xcc /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Piggy\ Bong-generated-files.hmap -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Piggy\ Bong-own-target-headers.hmap -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Piggy\ Bong-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/FanPlan-53290c13ec0670811797c78566c965fd-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Piggy\ Bong-project-headers.hmap -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/DerivedSources-normal/arm64 -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/DerivedSources/arm64 -Xcc -I/Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/momow1127/Library/Developer/Xcode/DerivedData/FanPlan-czmcvmyhngyjszeuiywomubvdbss/Build/Intermediates.noindex/FanPlan.build/Debug-iphonesimulator/Piggy\ Bong.build/Objects-normal/arm64/Piggy_Bong-Swift.h -working-directory /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main -experimental-emit-module-separately -disable-cmo
+
+note: Disabling hardened runtime with ad-hoc codesigning. (in target 'Piggy Bong' from project 'FanPlan')
+** BUILD FAILED **
+
+
+The following build commands failed:
+	SwiftCompile normal arm64 Compiling\ Double+Extensions.swift,\ PremiumGate.swift,\ ValidationService.swift,\ Artist.swift,\ GoalProgressSheet.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Double+Extensions.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/PremiumGate.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/ValidationService.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/Artist.swift /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/GoalProgressSheet.swift (in target 'Piggy Bong' from project 'FanPlan')
+	SwiftCompile normal arm64 /Users/momow1127/Desktop/Desktop/Portfolio/My\ Project/AI/PiggyBong-main/FanPlan/GoalProgressSheet.swift (in target 'Piggy Bong' from project 'FanPlan')
+	Building project FanPlan with scheme Piggy Bong
+(3 failures)

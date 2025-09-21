@@ -1,0 +1,30 @@
+name: test-ci
+
+on:
+  push:
+    branches: [ piggy-bong-main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Show Xcode versions
+      run: |
+        echo "=== Available Xcode versions ==="
+        ls -la /Applications | grep -i xcode || echo "No Xcode found with grep"
+        echo ""
+        echo "=== Current Xcode version ==="
+        xcode-select -p || echo "No Xcode selected"
+        echo ""
+        echo "=== Try to use default Xcode ==="
+        sudo xcode-select -s /Applications/Xcode.app/Contents/Developer || echo "Failed to select Xcode"
+        xcodebuild -version || echo "Failed to get version"
+    
+    - name: Simple build test
+      run: |
+        echo "Testing if we can build"
+        xcodebuild -list -project FanPlan.xcodeproj || echo "Failed to list schemes"

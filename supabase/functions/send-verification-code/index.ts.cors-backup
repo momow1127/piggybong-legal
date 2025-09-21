@@ -1,0 +1,264 @@
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { corsHeaders } from '../_shared/cors.ts'
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
+};
+
+
+interface SendCodeRequest {
+  email: string
+  type?: 'signup' | 'login' | 'reset'
+}
+
+interface SendCodeResponse {
+  success: boolean
+  message: string
+  expires_in_minutes?: number
+  debug?: any
+}
+
+// Email validation function
+function isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+// Generate random 6-digit code
+function generateVerificationCode(): string {
+  return Math.floor(100000 + Math.random() * 900000).toString()
+}
+
+serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
+
+  try {
+    console.log('🔍 Send verification code request started')
+    
+    // Initialize Supabase client with service role key for admin operations
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
+      }
+    )
+
+    console.log('📝 Environment check:', {
+      hasSupabaseUrl: !!Deno.env.get('SUPABASE_URL'),
+      hasServiceRole: !!Deno.env.get('SUPABASE_SERVICE_ROLE_KEY'),
+      supabaseUrl: Deno.env.get('SUPABASE_URL')?.substring(0, 30) + '...'
+    })
+
+    // Parse request body
+    const { email, type = 'signup' }: SendCodeRequest = await req.json()
+    console.log('📧 Email verification request:', { email, type })
+
+    // Validate email
+    if (!email || !isValidEmail(email)) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'Valid email address is required'
+        }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      )
+    }
+
+    // Generate verification code
+    const code = generateVerificationCode()
+    const expiresAt = new Date(Date.now() + 15 * 60 * 1000) // 15 minutes from now
+
+    console.log('🔢 Generated verification code:', { code, expiresAt })
+
+    // First, let's test database connectivity
+    try {
+      const { data: testData, error: testError } = await supabaseClient
+        .from('verification_codes')
+        .select('count', { count: 'exact' })
+      
+      console.log('🔌 Database connectivity test:', { 
+        success: !testError, 
+        error: testError?.message,
+        count: testData 
+      })
+      
+      if (testError) {
+        console.error('❌ Database connection error:', testError)
+        return new Response(
+          JSON.stringify({
+            success: false,
+            message: 'Database connection failed',
+            debug: { error: testError.message }
+          }),
+          {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          }
+        )
+      }
+    } catch (connectError) {
+      console.error('❌ Database connectivity test failed:', connectError)
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'Database connectivity test failed',
+          debug: { error: connectError.message }
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      )
+    }
+
+    // Rate limiting: Check if user has requested too many codes recently
+    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000)
+    
+    const { data: recentCodes, error: recentCodesError } = await supabaseClient
+      .from('verification_codes')
+      .select('created_at')
+      .eq('email', email)
+      .gte('created_at', fiveMinutesAgo.toISOString())
+      .order('created_at', { ascending: false })
+
+    console.log('⏱️ Rate limiting check:', {
+      email,
+      recentCodesCount: recentCodes?.length,
+      error: recentCodesError?.message
+    })
+
+    if (recentCodesError) {
+      console.error('Error checking recent codes:', recentCodesError)
+    }
+
+    if (recentCodes && recentCodes.length >= 3) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'Too many requests. Please wait 5 minutes before requesting another code.'
+        }),
+        {
+          status: 429,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      )
+    }
+
+    // Store verification code in database
+    console.log('💾 Attempting to insert verification code...')
+    const insertData = {
+      email: email,
+      code: code,
+      expires_at: expiresAt.toISOString(),
+      created_at: new Date().toISOString(),
+      attempt_count: 0,
+      max_attempts: 3,
+      verified_at: null
+    }
+    console.log('📋 Insert data:', insertData)
+
+    const { data: insertResult, error: insertError } = await supabaseClient
+      .from('verification_codes')
+      .insert(insertData)
+      .select()
+
+    console.log('💾 Insert result:', {
+      success: !insertError,
+      error: insertError?.message,
+      data: insertResult
+    })
+
+    if (insertError) {
+      console.error('❌ Error storing verification code:', insertError)
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'Failed to generate verification code',
+          debug: { 
+            error: insertError.message,
+            details: insertError.details,
+            hint: insertError.hint
+          }
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      )
+    }
+
+    console.log('✅ Verification code stored successfully')
+
+    // For development/testing, always log the code
+    console.log(`📬 Verification code for ${email}: ${code}`)
+    console.log('⏰ Code expires at:', expiresAt.toISOString())
+
+    // Calculate expiry time in minutes
+    const expiresInMinutes = Math.floor((expiresAt.getTime() - Date.now()) / 60000)
+
+    console.log('✅ Verification code process completed successfully')
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: 'Verification code sent successfully',
+        expires_in_minutes: expiresInMinutes,
+        debug: {
+          code: code, // Remove this in production
+          email: email
+        }
+      } as SendCodeResponse),
+      {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      }
+    )
+
+  } catch (error) {
+    console.error('❌ Error in send-verification-code:', error)
+    return new Response(
+      JSON.stringify({
+        success: false,
+        message: 'Internal server error',
+        debug: { error: error.message }
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      }
+    )
+  }
+})
+
+/* 
+Example usage from iOS:
+POST /functions/v1/send-verification-code
+{
+  "email": "user@example.com",
+  "type": "signup"
+}
+
+Response:
+{
+  "success": true,
+  "message": "Verification code sent successfully", 
+  "expires_in_minutes": 15,
+  "debug": {
+    "code": "123456",
+    "email": "user@example.com"
+  }
+}
+*/
