@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <title>Terms of Service - Piggy Bong</title>
+    <link rel="icon" type="image/png" href="fav-icon.png">
+    <link rel="shortcut icon" type="image/png" href="fav-icon.png">
+    <link rel="apple-touch-icon" href="fav-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'nunito': ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#5D2CEE',
+                        'secondary': '#8B55ED',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Optimized unified gradient background */
+        html {
+            scroll-behavior: smooth;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #0D0011;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            /* Multi-stop vertical gradient for smooth flow */
+            background: linear-gradient(180deg,
+                #0D0011 0%,     /* Deep purple start */
+                #362239 15%,    /* Mid purple */
+                #1A0B2E 35%,    /* Dark purple-blue */
+                #2D1B3D 50%,    /* New mid tone */
+                #1A0B2E 65%,    /* Dark purple-blue */
+                #362239 85%,    /* Mid purple return */
+                #0D0011 100%    /* Deep purple end */
+            );
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Prevent scroll bounce and ensure full coverage */
+        html, body {
+            overscroll-behavior: none;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        /* Enhanced glass cards */
+        .card-glass {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Remove section backgrounds */
+        footer, header, section, nav {
+            background: none !important;
+        }
+
+        /* Ensure all containers respect viewport width */
+        * {
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+
+        /* Fluid Responsive Typography - Scales smoothly across all devices */
+        h1 {
+            font-size: clamp(1.5rem, 4vw + 0.25rem, 2.5rem) !important;
+            line-height: 1.2 !important;
+        }
+
+        h2 {
+            font-size: clamp(1.125rem, 3vw + 0.125rem, 1.75rem) !important;
+            line-height: 1.3 !important;
+        }
+
+        /* Responsive Text Utilities */
+        .text-responsive-card-title {
+            font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+            line-height: 1.2;
+        }
+
+        .text-responsive-card-desc {
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            line-height: 1.5;
+        }
+
+        .text-responsive-subtitle {
+            font-size: clamp(0.95rem, 2.5vw, 1.125rem);
+            line-height: 1.4;
+        }
+
+        .text-responsive-footer {
+            font-size: clamp(0.8rem, 1.5vw, 0.875rem);
+            line-height: 1.4;
+        }
+
+        .text-responsive-body {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            line-height: 1.6;
+        }
+
+        h3 {
+            font-size: clamp(1rem, 2.5vw + 0.1rem, 1.5rem);
+            line-height: 1.3;
+        }
+
+        p, li {
+            font-size: clamp(0.9rem, 2.5vw + 0.1rem, 1.125rem);
+            line-height: clamp(1.5, 0.5vw + 1.4, 1.7);
+        }
+
+        /* Responsive text classes for better scaling */
+        .text-xs { font-size: clamp(0.75rem, 1.5vw + 0.05rem, 0.875rem); }
+        .text-sm { font-size: clamp(0.8rem, 2vw + 0.05rem, 1rem); }
+        .text-base { font-size: clamp(0.9rem, 2.5vw + 0.1rem, 1.125rem); }
+        .text-lg { font-size: clamp(1rem, 3vw + 0.125rem, 1.25rem); }
+        .text-xl { font-size: clamp(1.125rem, 3.5vw + 0.15rem, 1.375rem); }
+        .text-2xl { font-size: clamp(1.25rem, 4vw + 0.2rem, 1.5rem); }
+        .text-3xl { font-size: clamp(1.5rem, 5vw + 0.25rem, 2rem); }
+
+        /* Device-specific optimizations */
+        @media (max-width: 480px) {
+            /* Small phones */
+            h1 { font-size: clamp(1.25rem, 6vw, 1.75rem) !important; }
+            h2 { font-size: clamp(1rem, 5vw, 1.375rem) !important; }
+            p, li { font-size: clamp(0.9rem, 4vw, 1rem); }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            /* Tablets */
+            h1 { font-size: clamp(1.5rem, 5vw, 2.25rem) !important; }
+            h2 { font-size: clamp(1.125rem, 4vw, 1.625rem) !important; }
+            p, li { font-size: clamp(1rem, 3vw, 1.125rem); }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            /* Small laptops */
+            h1 { font-size: clamp(1.75rem, 4vw, 2.5rem) !important; }
+            h2 { font-size: clamp(1.25rem, 3vw, 1.75rem) !important; }
+            p, li { font-size: clamp(1.05rem, 2.5vw, 1.125rem); }
+        }
+
+        @media (min-width: 1025px) {
+            /* Large screens */
+            h1 { font-size: clamp(2rem, 3vw, 2.5rem) !important; }
+            h2 { font-size: clamp(1.375rem, 2.5vw, 1.75rem) !important; }
+            p, li { font-size: clamp(1.05rem, 1.5vw, 1.125rem); }
+        }
+
+        /* Responsive Containers */
+        .container-responsive {
+            width: 100%;
+            max-width: min(90vw, 1024px);
+            margin: 0 auto;
+            padding: clamp(1rem, 3vw, 2rem);
+        }
+        .contact-gradient {
+            background: linear-gradient(135deg, #5D2CEE 0%, #8B55ED 100%);
+        }
+        .highlight-gradient {
+            background: linear-gradient(135deg, #5D2CEE 0%, #8B55ED 100%);
+        }
+        .important-gradient {
+            background: linear-gradient(135deg, #DC4444 0%, #FF8E8E 100%);
+        }
+
+        /* Enhanced Responsive Buttons */
+        .btn-responsive {
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+            padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
+            min-height: 44px; /* WCAG compliant tap target */
+            min-width: 44px;
+            border-radius: clamp(1.5rem, 3vw, 2rem);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-large {
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+            padding: clamp(1rem, 2.5vw, 1.25rem) clamp(2rem, 5vw, 2.5rem);
+            min-height: 48px; /* Larger for primary actions */
+            min-width: 48px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-icon {
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            padding: clamp(0.5rem, 1.5vw, 0.75rem);
+            min-height: 44px;
+            min-width: 44px;
+            border-radius: clamp(0.5rem, 2vw, 0.75rem);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        /* Enhanced focus and hover states */
+        .btn-responsive:focus, .btn-large:focus, .btn-icon:focus {
+            outline: 2px solid #8B55ED;
+            outline-offset: 2px;
+            transform: translateY(-1px);
+        }
+
+        .btn-responsive:hover, .btn-large:hover, .btn-icon:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-responsive:active, .btn-large:active, .btn-icon:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Accessibility: Skip to content link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: #5D2CEE;
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 10000;
+            font-weight: 600;
+        }
+
+        .skip-link:focus {
+            top: 6px;
+        }
+
+        /* Enhanced focus states for accessibility */
+        a:focus, button:focus, [tabindex]:focus {
+            outline: 2px solid #8B55ED;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        /* Remove default focus outline and apply custom styling */
+        *:focus {
+            outline: none;
+        }
+
+        /* Ensure touch targets are at least 44px */
+        a, button, [role="button"] {
+            min-height: 44px;
+            min-width: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Enhanced Sticky Navigation - Cross-browser compatibility */
+        .navbar-sticky {
+            position: sticky;
+            position: -webkit-sticky; /* Safari fallback */
+            top: 0;
+            z-index: 10000; /* Ensure it's above mobile menu overlay */
+            /* Prevent layout shifts on sticky activation */
+            will-change: transform;
+            /* Force hardware acceleration for smooth scrolling */
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            /* Ensure backdrop blur works on all browsers */
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+        }
+
+        /* iOS Safari specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .navbar-sticky {
+                /* Force iOS to respect sticky positioning */
+                position: -webkit-sticky;
+                position: sticky;
+                /* Prevent iOS Safari sticky issues */
+                transform: translate3d(0, 0, 0);
+                -webkit-transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* Prevent content jumping when navbar becomes sticky */
+        .navbar-container {
+            position: relative;
+            z-index: 10000;
+        }
+
+        /* Full Screen Mobile Menu Styles */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* Use the same background as the page */
+            background: linear-gradient(180deg,
+                #0D0011 0%,
+                #362239 15%,
+                #1A0B2E 35%,
+                #2D1B3D 50%,
+                #1A0B2E 65%,
+                #362239 85%,
+                #0D0011 100%
+            );
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active .mobile-menu-content {
+            transform: translateY(0);
+        }
+
+        /* Hamburger to X transformation */
+        .hamburger-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-line {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: currentColor;
+            border-radius: 1px;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-line:nth-child(1) {
+            top: 6px;
+        }
+
+        .hamburger-line:nth-child(2) {
+            top: 11px;
+        }
+
+        .hamburger-line:nth-child(3) {
+            top: 16px;
+        }
+
+        /* Transform to X when active */
+        .hamburger-icon.active .hamburger-line:nth-child(1) {
+            top: 11px;
+            transform: rotate(45deg);
+        }
+
+        .hamburger-icon.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-icon.active .hamburger-line:nth-child(3) {
+            top: 11px;
+            transform: rotate(-45deg);
+        }
+
+        /* Icon fallback system */
+        .icon-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.75rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="text-white font-nunito">
+    <!-- Skip to content link for screen readers -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar-sticky navbar-container bg-black/20 border-b border-white/10 shadow-lg" role="navigation" aria-label="Primary navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex justify-between items-center py-5 min-h-[80px]">
+                <!-- Logo with Icon -->
+                <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200">
+                    <div class="icon-container h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12">
+                        <img
+                            src="nav-icon.svg"
+                            alt="Piggy Bong Logo"
+                            class="h-full w-full object-contain"
+                            style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;"
+                            loading="eager"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <!-- Logo Fallback -->
+                        <div class="icon-fallback" style="display: none;">
+                            <span class="text-primary font-bold text-lg">🐷</span>
+                        </div>
+                    </div>
+                    <span class="font-bold text-xl text-white">Piggy Bong</span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center gap-6">
+                    <div class="flex items-center gap-6">
+                        <a href="index.html#how-it-works" class="text-white hover:text-gray-100 transition-colors duration-200 py-2">How It Works</a>
+                        <a href="index.html#plans" class="text-white hover:text-gray-100 transition-colors duration-200 py-2">Features</a>
+                        <a href="index.html#plans" class="text-white hover:text-gray-100 transition-colors duration-200 py-2">Plans</a>
+                        <a href="terms.html" class="text-white hover:text-gray-100 transition-colors duration-200 py-2" aria-current="page">Terms of Service</a>
+                    </div>
+
+                    <!-- Back to Home Button -->
+                    <div class="ml-6 lg:ml-8">
+                        <a href="index.html" class="btn-responsive bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 focus:bg-white/40" aria-label="Navigate back to home page">Back to Home</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button
+                        id="mobile-menu-button"
+                        class="btn-icon text-white hover:bg-white/10 focus:bg-white/20"
+                        aria-label="Open mobile navigation menu"
+                        aria-expanded="false"
+                    >
+                        <div class="hamburger-icon" id="hamburger-icon">
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Full Screen Mobile Menu Overlay -->
+    <div id="mobile-menu" class="mobile-menu-overlay md:hidden">
+        <div class="mobile-menu-content">
+            <nav class="text-center space-y-6">
+                <a href="index.html" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Home</a>
+                <a href="index.html#how-it-works" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">How It Works</a>
+                <a href="index.html#plans" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Features</a>
+                <a href="mailto:hello@piggybong.com" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Contact Us</a>
+                <a href="privacy.html" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Privacy Policy</a>
+                <a href="terms.html" class="block text-purple-300 text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center" aria-current="page">Terms of Service</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="main-content" tabindex="-1" class="min-h-screen py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
+        <div class="container-responsive">
+            <!-- Header -->
+            <div class="text-center mb-8 sm:mb-12">
+                <h1 class="font-bold text-white mb-4">Terms of Service</h1>
+                <p class="text-gray-300 text-responsive-subtitle">Last updated: August 29, 2025</p>
+            </div>
+
+            <!-- Important Notice -->
+            <div class="important-gradient p-6 rounded-2xl mb-8 text-white">
+                <p class="font-semibold text-lg">
+                    <strong>Important:</strong> By downloading, installing, or using Piggy Bong, you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the app.
+                </p>
+            </div>
+
+            <!-- Content Sections -->
+            <div class="space-y-6 lg:space-y-8">
+                <!-- Acceptance of Terms -->
+                <section class="card-glass p-6 lg:p-8 rounded-2xl">
+                    <h2 class="text-2xl font-semibold text-white mb-4 ">1. Acceptance of Terms</h2>
+                    <p class="text-gray-300 text-responsive-body mb-4">These Terms of Service ("Terms") constitute a legally binding agreement between you ("User," "you," or "your") and the developer of Piggy Bong ("we," "us," "our," or "Developer") regarding your use of the Piggy Bong mobile application ("App," "Service," or "Piggy Bong").</p>
+                    <p class="text-gray-300 text-responsive-body">By accessing or using Piggy Bong, you acknowledge that you have read, understood, and agree to be bound by these Terms and our Privacy Policy. These Terms apply to all users of the App.</p>
+                </section>
+
+                <!-- Description of Service -->
+                <section class="card-glass p-6 lg:p-8 rounded-2xl">
+                    <h2 class="text-2xl font-semibold text-white mb-4 ">2. Description of Service</h2>
+
+                    <h3 class="text-xl font-medium text-white mb-3">2.1 Piggy Bong Overview</h3>
+                    <p class="text-gray-300 text-responsive-body mb-4">Piggy Bong is a K-pop fan spending tracker mobile application designed to help users:</p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2 mb-6">
+                        <li>Track spending on K-pop related purchases (concerts, albums, merchandise)</li>
+                        <li>Set and manage budgets for different spending categories</li>
+                        <li>Monitor financial goals related to K-pop activities</li>
+                        <li>Analyze spending patterns and habits</li>
+                        <li>Plan for future K-pop related expenses</li>
+                    </ul>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-medium text-white mb-3">2.2 Service Availability</h3>
+                            <p class="text-gray-300 text-responsive-body">Piggy Bong is currently available for iOS devices through the Apple App Store. The App requires an internet connection for full functionality and uses Supabase as our backend service provider.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-white mb-3">2.3 Service Modifications</h3>
+                            <p class="text-gray-300 text-responsive-body">We reserve the right to modify, update, or discontinue the App at any time, with or without notice. We may also impose limits on certain features or restrict access to parts of the App.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- User Accounts and Eligibility -->
+                <section class="card-glass p-6 lg:p-8 rounded-2xl">
+                    <h2 class="text-2xl font-semibold text-white mb-4 ">3. User Accounts and Eligibility</h2>
+
+                    <div class="highlight-gradient p-6 rounded-xl text-white mb-6">
+                        <h4 class="font-semibold text-lg mb-2">Age Restriction:</h4>
+                        <p>You must be at least 13 years old to create a Piggy Bong account and use our services.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-medium text-white mb-3">3.1 Account Creation</h3>
+                            <p class="text-gray-300 mb-3">To access certain features, you must create an account by providing:</p>
+                            <ul class="list-disc list-inside text-gray-300 space-y-1">
+                                <li>A valid email address</li>
+                                <li>A secure password</li>
+                                <li>Age verification</li>
+                                <li>Acceptance of these Terms and Privacy Policy</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-white mb-3">3.2 Account Security</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-1">
+                                <li>You are responsible for maintaining the confidentiality of your account credentials</li>
+                                <li>You must notify us immediately of any unauthorized access to your account</li>
+                                <li>You are liable for all activities that occur under your account</li>
+                                <li>We recommend using strong, unique passwords and enabling available security features</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Acceptable Use Policy -->
+                <section class="card-glass p-6 lg:p-8 rounded-2xl">
+                    <h2 class="text-2xl font-semibold text-white mb-4 ">4. Acceptable Use Policy</h2>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-medium text-white mb-3">4.1 Permitted Uses</h3>
+                            <p class="text-gray-300 mb-3">You may use Piggy Bong for:</p>
+                            <ul class="list-disc list-inside text-gray-300 space-y-1">
+                                <li>Personal financial tracking related to K-pop purchases</li>
+                                <li>Setting and monitoring personal budgets</li>
+                                <li>Analyzing your spending patterns</li>
+                                <li>Planning for future K-pop related expenses</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-white mb-3">4.2 Prohibited Activities</h3>
+                            <p class="text-gray-300 mb-3">You agree not to:</p>
+                            <ul class="list-disc list-inside text-gray-300 space-y-1 text-sm">
+                                <li>Use the App for any illegal or unauthorized purpose</li>
+                                <li>Violate any local, state, national, or international law</li>
+                                <li>Input false, misleading, or fraudulent information</li>
+                                <li>Attempt to gain unauthorized access to the App or related systems</li>
+                                <li>Interfere with or disrupt the App's functionality</li>
+                                <li>Use automated tools to access or collect data from the App</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Financial Information Disclaimer -->
+                <section class="card-glass p-6 lg:p-8 rounded-2xl">
+                    <h2 class="text-2xl font-semibold text-white mb-4 ">7. Financial Information Disclaimer</h2>
+
+                    <div class="important-gradient p-6 rounded-xl text-white mb-6">
+                        <p class="font-semibold text-lg">
+                            <strong>Important Financial Disclaimer:</strong> Piggy Bong is a spending tracking tool only. We do not provide financial advice, investment guidance, or professional financial services.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-medium text-white mb-3">7.1 No Financial Advice</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                <li>Piggy Bong is for informational and tracking purposes only</li>
+                                <li>We do not provide financial planning or investment advice</li>
+                                <li>You should consult qualified financial professionals for financial guidance</li>
+                                <li>All financial decisions are your responsibility</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-white mb-3">7.2 Data Accuracy</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                <li>You are responsible for the accuracy of financial data entered</li>
+                                <li>We do not verify the accuracy of user-inputted information</li>
+                                <li>The App provides tools for organization, not financial validation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Limitation of Liability -->
+                <section class="card-glass p-6 lg:p-8 rounded-2xl">
+                    <h2 class="text-2xl font-semibold text-white mb-4 ">9. Limitation of Liability</h2>
+
+                    <div class="important-gradient p-6 rounded-xl text-white mb-6">
+                        <p class="font-semibold text-lg">
+                            <strong>Liability Limitation:</strong> Our liability to you is limited as described below.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-medium text-white mb-3">9.1 Exclusion of Damages</h3>
+                            <p class="text-gray-300 mb-3">To the maximum extent permitted by law, we shall not be liable for:</p>
+                            <ul class="list-disc list-inside text-gray-300 space-y-1">
+                                <li>Indirect, incidental, special, consequential, or punitive damages</li>
+                                <li>Loss of profits, data, use, or goodwill</li>
+                                <li>Service interruption or data loss</li>
+                                <li>Any damages resulting from your use of the App</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-white mb-3">9.2 Maximum Liability</h3>
+                            <p class="text-gray-300 mb-3">Our total liability to you for all claims arising from your use of Piggy Bong shall not exceed $100 or the amount you paid for premium features (if any) in the 12 months preceding the claim, whichever is greater.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Termination -->
+                <section class="card-glass p-6 lg:p-8 rounded-2xl">
+                    <h2 class="text-2xl font-semibold text-white mb-4 ">11. Termination</h2>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-medium text-white mb-3">11.1 Termination by You</h3>
+                            <p class="text-gray-300 mb-3">You may terminate your account at any time by:</p>
+                            <ul class="list-disc list-inside text-gray-300 space-y-1">
+                                <li>Deleting your account through the App settings</li>
+                                <li>Contacting us at hello@piggybong.com</li>
+                                <li>Uninstalling the App from your device</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-white mb-3">11.2 Termination by Us</h3>
+                            <p class="text-gray-300 mb-3">We may suspend or terminate your account if you:</p>
+                            <ul class="list-disc list-inside text-gray-300 space-y-1">
+                                <li>Violate these Terms of Service</li>
+                                <li>Engage in prohibited activities</li>
+                                <li>Provide false information</li>
+                                <li>Fail to pay any applicable fees</li>
+                                <li>Remain inactive for an extended period</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Apple App Store Terms -->
+                <section class="card-glass p-6 lg:p-8 rounded-2xl">
+                    <h2 class="text-2xl font-semibold text-white mb-4 ">12. Apple App Store Terms</h2>
+                    <p class="text-gray-300 mb-6">If you download Piggy Bong from the Apple App Store, the following additional terms apply:</p>
+
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div>
+                            <h3 class="text-lg font-medium text-white mb-3">12.1 Apple as Third Party</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-1 text-sm">
+                                <li>Apple is not a party to these Terms and has no responsibility for the App</li>
+                                <li>Apple has no obligation to provide maintenance or support for the App</li>
+                                <li>Apple is not responsible for addressing any claims relating to the App</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-medium text-white mb-3">12.2 License Scope</h3>
+                            <p class="text-gray-300 text-sm">The license granted is limited to a non-transferable license to use the App on Apple-branded products that you own or control.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-medium text-white mb-3">12.3 Product Claims</h3>
+                            <p class="text-gray-300 text-sm">In case of any failure to conform to warranty, you may notify Apple, and Apple will refund the purchase price (if any). Apple has no other warranty obligation with respect to the App.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contact Section -->
+                <section class="card-glass p-6 lg:p-8 rounded-2xl">
+                    <h2 class="text-2xl font-semibold text-white mb-4 ">16. Contact Information</h2>
+                    <p class="text-gray-300 mb-8">If you have questions about these Terms of Service, please contact us:</p>
+
+                    <div class="contact-gradient p-6 rounded-xl text-white mb-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Left Column: Email + Developer -->
+                            <div class="space-y-6">
+                                <div aria-label="Email contact information">
+                                    <h3 class="text-white font-semibold mb-1">Email</h3>
+                                    <a href="mailto:hello@piggybong.com" class="text-white hover:text-gray-100 transition-colors duration-200 underline underline-offset-2">
+                                        hello@piggybong.com
+                                    </a>
+                                </div>
+
+                                <div aria-label="Developer information">
+                                    <h3 class="text-white font-semibold mb-1">Developer</h3>
+                                    <p class="text-white">Carmen Wong</p>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: App Name + Response Time -->
+                            <div class="space-y-6">
+                                <div aria-label="Application information">
+                                    <h3 class="text-white font-semibold mb-1">App Name</h3>
+                                    <p class="text-white">Piggy Bong</p>
+                                </div>
+
+                                <div aria-label="Response time information">
+                                    <h3 class="text-white font-semibold mb-1">Response Time</h3>
+                                    <p class="text-white">We aim to respond within 48–72 hours</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-300 mt-8 text-left"><strong>Effective Date:</strong> These Terms of Service are effective as of August 29, 2025.</p>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-gray-300 font-semibold text-lg">
+                            <strong>Thank you for using Piggy Bong!</strong> We appreciate your trust in our app to help manage your K-pop spending.
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-10 lg:px-10">
+            <!-- Mobile Layout: Stacked -->
+            <div class="block lg:hidden">
+                <!-- Navigation Links -->
+                <nav class="text-center mb-8" aria-label="Footer Navigation">
+                    <div class="grid grid-cols-2 gap-y-3 gap-x-4">
+                        <a href="index.html#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">How It Works</a>
+                        <a href="index.html#features" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Piggy Bong AI</a>
+                        <a href="index.html#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Plans</a>
+                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Contact</a>
+                        <a href="privacy.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Privacy Policy</a>
+                        <span class="text-gray-400 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center cursor-default" aria-current="page">Terms of Service</span>
+                    </div>
+                </nav>
+                <!-- Download iOS Button -->
+                <div class="text-center mb-8">
+                    <a href="index.html#plans"
+                       class="btn-responsive bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30"
+                       aria-label="Download Piggy Bong iOS app">
+                        Download iOS
+                    </a>
+                </div>
+            </div>
+
+            <!-- Desktop Layout: Left/Right -->
+            <div class="hidden lg:flex lg:items-center lg:justify-between mb-8">
+                <!-- Left: Navigation Links -->
+                <nav aria-label="Footer Navigation">
+                    <div class="flex flex-wrap gap-x-8">
+                        <a href="index.html#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center">How It Works</a>
+                        <a href="index.html#features" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center">Piggy Bong AI</a>
+                        <a href="index.html#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center">Plans</a>
+                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center">Contact</a>
+                        <a href="privacy.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center">Privacy Policy</a>
+                        <span class="text-gray-400 text-responsive-footer font-medium cursor-default min-h-[44px] flex items-center" aria-current="page">Terms of Service</span>
+                    </div>
+                </nav>
+                <!-- Right: Download iOS Button -->
+                <a href="index.html#plans"
+                   class="btn-responsive bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30"
+                   aria-label="Download Piggy Bong iOS app">
+                    Download iOS
+                </a>
+            </div>
+
+            <!-- Copyright -->
+            <div class="text-center">
+                <p class="text-white/60 text-responsive-footer">© 2025 Piggy Bong All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu JavaScript -->
+    <script>
+        // Enhanced mobile menu functionality with full-screen overlay
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+
+            if (isMenuOpen) {
+                // Open menu
+                mobileMenu.classList.add('active');
+                hamburgerIcon.classList.add('active');
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+                mobileMenuButton.setAttribute('aria-label', 'Close mobile navigation menu');
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Close menu
+                mobileMenu.classList.remove('active');
+                hamburgerIcon.classList.remove('active');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                mobileMenuButton.setAttribute('aria-label', 'Open mobile navigation menu');
+                // Restore body scroll
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeMenu() {
+            if (isMenuOpen) {
+                isMenuOpen = false;
+                mobileMenu.classList.remove('active');
+                hamburgerIcon.classList.remove('active');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                mobileMenuButton.setAttribute('aria-label', 'Open mobile navigation menu');
+                // Restore body scroll
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Toggle menu when hamburger button is clicked
+        mobileMenuButton.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking on any navigation link
+        const mobileMenuLinks = mobileMenu.querySelectorAll('nav a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Close menu when clicking on the overlay background (outside the nav content)
+        mobileMenu.addEventListener('click', function(event) {
+            if (event.target === mobileMenu) {
+                closeMenu();
+            }
+        });
+
+        // Close menu when pressing Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && isMenuOpen) {
+                closeMenu();
+            }
+        });
+
+        // Prevent body scroll bounce on iOS when menu is open
+        mobileMenu.addEventListener('touchmove', function(event) {
+            if (isMenuOpen) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
