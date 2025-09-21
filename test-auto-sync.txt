@@ -1,5 +1,0 @@
-Test file created at: 2025-09-13 17:11
-This is to test the auto-commit and push functionality.
-Supabase: Connected ✅
-GitHub: Connected ✅
-Auto-push: Enabled ✅
