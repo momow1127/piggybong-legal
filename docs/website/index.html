@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piggy Bong - Your K-pop Fan Tracker</title>
+    <link rel="icon" type="image/png" href="fav-icon.png">
+    <link rel="shortcut icon" type="image/png" href="fav-icon.png">
+    <link rel="apple-touch-icon" href="fav-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" href="piggy-lighstick3x.png" as="image" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'nunito': ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#5D2CEE',
+                        'secondary': '#8B55ED',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Optimized unified gradient background */
+        html {
+            scroll-behavior: smooth;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #0D0011;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            /* Multi-stop vertical gradient for smooth flow */
+            background: linear-gradient(180deg,
+                #0D0011 0%,     /* Deep purple start */
+                #362239 15%,    /* Mid purple */
+                #1A0B2E 35%,    /* Dark purple-blue */
+                #2D1B3D 50%,    /* New mid tone */
+                #1A0B2E 65%,    /* Dark purple-blue */
+                #362239 85%,    /* Mid purple return */
+                #0D0011 100%    /* Deep purple end */
+            );
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Prevent scroll bounce and ensure full coverage */
+        html, body {
+            overscroll-behavior: none;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        /* Enhanced glass cards */
+        .card-glass {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Remove section backgrounds */
+        footer, header, section, nav {
+            background: none !important;
+        }
+
+        /* Ensure all containers respect viewport width */
+        * {
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+
+        /* Enhanced Sticky Navigation - Cross-browser compatibility */
+        .navbar-sticky {
+            position: sticky;
+            position: -webkit-sticky; /* Safari fallback */
+            top: 0;
+            z-index: 10000; /* Ensure it's above mobile menu overlay */
+            /* Prevent layout shifts on sticky activation */
+            will-change: transform;
+            /* Force hardware acceleration for smooth scrolling */
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            /* Ensure backdrop blur works on all browsers */
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+        }
+
+        /* iOS Safari specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .navbar-sticky {
+                /* Force iOS to respect sticky positioning */
+                position: -webkit-sticky;
+                position: sticky;
+                /* Prevent iOS Safari sticky issues */
+                transform: translate3d(0, 0, 0);
+                -webkit-transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* Prevent content jumping when navbar becomes sticky */
+        .navbar-container {
+            position: relative;
+            z-index: 10000;
+        }
+
+        /* Smooth scrolling for anchor links - works with sticky nav */
+        html {
+            scroll-padding-top: 100px; /* Account for navbar height */
+        }
+
+        /* Ensure content doesn't hide behind sticky navbar */
+        section, main {
+            scroll-margin-top: 100px;
+        }
+
+        /* Fluid Responsive Typography - Scales smoothly across all devices */
+        h1 {
+            font-size: clamp(2.25rem, 6vw + 0.5rem, 4.5rem) !important;
+            line-height: 1.1 !important;
+        }
+
+        h2 {
+            font-size: clamp(1.375rem, 4vw + 0.25rem, 2.5rem) !important;
+            line-height: 1.2 !important;
+        }
+
+        h3 {
+            font-size: clamp(1.125rem, 3vw + 0.125rem, 1.875rem);
+            line-height: 1.3;
+        }
+
+        p {
+            font-size: clamp(0.9rem, 2.5vw + 0.1rem, 1.25rem);
+            line-height: clamp(1.5, 0.5vw + 1.4, 1.7);
+        }
+
+        /* Responsive Text Utilities */
+        .text-responsive-card-title {
+            font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+            line-height: 1.2;
+        }
+
+        .text-responsive-card-desc {
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            line-height: 1.5;
+        }
+
+        .text-responsive-subtitle {
+            font-size: clamp(0.95rem, 2.5vw, 1.125rem);
+            line-height: 1.4;
+        }
+
+        .text-responsive-footer {
+            font-size: clamp(0.8rem, 1.5vw, 0.875rem);
+            line-height: 1.4;
+        }
+
+        .text-responsive-price {
+            font-size: clamp(1.5rem, 4vw, 1.875rem);
+        }
+
+        .text-responsive-price-suffix {
+            font-size: clamp(0.875rem, 2vw, 1rem);
+        }
+
+
+        /* Enhanced Responsive Buttons */
+        .btn-responsive {
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+            padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
+            min-height: 44px; /* WCAG compliant tap target */
+            min-width: 44px;
+            border-radius: clamp(1.5rem, 3vw, 2rem);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-large {
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+            padding: clamp(1rem, 2.5vw, 1.25rem) clamp(2rem, 5vw, 2.5rem);
+            min-height: 48px; /* Larger for primary actions */
+            min-width: 48px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-icon {
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            padding: clamp(0.5rem, 1.5vw, 0.75rem);
+            min-height: 44px;
+            min-width: 44px;
+            border-radius: clamp(0.5rem, 2vw, 0.75rem);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        /* Enhanced focus and hover states */
+        .btn-responsive:focus, .btn-large:focus, .btn-icon:focus {
+            outline: 2px solid #8B55ED;
+            outline-offset: 2px;
+            transform: translateY(-1px);
+        }
+
+        .btn-responsive:hover, .btn-large:hover, .btn-icon:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-responsive:active, .btn-large:active, .btn-icon:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Full Screen Mobile Menu Styles */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* Use the same background as the page */
+            background: linear-gradient(180deg,
+                #0D0011 0%,
+                #362239 15%,
+                #1A0B2E 35%,
+                #2D1B3D 50%,
+                #1A0B2E 65%,
+                #362239 85%,
+                #0D0011 100%
+            );
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active .mobile-menu-content {
+            transform: translateY(0);
+        }
+
+        /* Hamburger to X transformation */
+        .hamburger-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-line {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: currentColor;
+            border-radius: 1px;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-line:nth-child(1) {
+            top: 6px;
+        }
+
+        .hamburger-line:nth-child(2) {
+            top: 11px;
+        }
+
+        .hamburger-line:nth-child(3) {
+            top: 16px;
+        }
+
+        /* Transform to X when active */
+        .hamburger-icon.active .hamburger-line:nth-child(1) {
+            top: 11px;
+            transform: rotate(45deg);
+        }
+
+        .hamburger-icon.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-icon.active .hamburger-line:nth-child(3) {
+            top: 11px;
+            transform: rotate(-45deg);
+        }
+
+        /* Mobile-first responsive containers */
+        .container-responsive {
+            width: 100%;
+            max-width: min(90vw, 1200px);
+            margin: 0 auto;
+            padding: clamp(0.75rem, 2.5vw, 1.5rem);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #5D2CEE, #8B55ED);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #5D2CEE, #8B55ED);
+        }
+        .lightstick-glow {
+            filter: drop-shadow(0 0 30px rgba(139, 85, 237, 0.6))
+                    drop-shadow(0 0 60px rgba(93, 44, 238, 0.4));
+            animation: sway 3s ease-in-out infinite;
+        }
+        @keyframes sway {
+            0%, 100% {
+                transform: rotate(-2deg) translateY(0px);
+            }
+            25% {
+                transform: rotate(1deg) translateY(-3px);
+            }
+            50% {
+                transform: rotate(-1deg) translateY(0px);
+            }
+            75% {
+                transform: rotate(2deg) translateY(-2px);
+            }
+        }
+
+        /* Image Loading States */
+        .image-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-skeleton {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.1) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s ease-in-out infinite;
+            border-radius: 1rem;
+            z-index: 2;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-skeleton.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .hero-image {
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        .hero-image.loaded {
+            opacity: 1;
+        }
+
+        .image-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-fallback.show {
+            opacity: 1;
+        }
+
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            .image-skeleton {
+                animation: none;
+                background: rgba(255, 255, 255, 0.1);
+            }
+            .hero-image {
+                transition: none;
+            }
+            .lightstick-glow {
+                animation: none;
+            }
+        }
+
+        /* SVG Icon System */
+        .icon-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        .check-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            flex-shrink: 0;
+            color: #4ADE80;
+        }
+
+        .feature-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            color: #ffffff;
+        }
+
+        @media (min-width: 1024px) {
+            .feature-icon {
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+
+        /* Screen reader only text */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+<body class="text-white font-nunito">
+    <!-- Navigation Bar -->
+    <nav class="navbar-sticky navbar-container bg-black/20 border-b border-white/10 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex justify-between items-center py-5 min-h-[80px]">
+                <!-- Logo with Icon -->
+                <a href="#hero" class="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200">
+                    <div class="icon-container h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12">
+                        <img
+                            id="nav-logo"
+                            src="nav-icon.svg"
+                            alt="Piggy Bong Logo"
+                            class="h-full w-full object-contain"
+                            style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;"
+                            loading="eager"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <!-- Logo Fallback -->
+                        <div class="icon-fallback" style="display: none;">
+                            <span class="text-primary font-bold text-lg">🐷</span>
+                        </div>
+                    </div>
+                    <span class="font-bold text-xl text-white">Piggy Bong</span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center gap-6">
+                    <div class="flex items-center gap-6">
+                        <a href="#how-it-works" class="text-white hover:text-gray-100 transition-colors duration-200 py-2">How It Works</a>
+                        <a href="#plans" class="text-white hover:text-gray-100 transition-colors duration-200 py-2">Features</a>
+                        <a href="#plans" class="text-white hover:text-gray-100 transition-colors duration-200 py-2">Plans</a>
+                    </div>
+
+                    <!-- Download iOS Button with proper spacing -->
+                    <div class="ml-6 lg:ml-8">
+                        <a href="#plans" class="btn-responsive bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 focus:bg-white/40" aria-label="Download Piggy Bong iOS app">Download iOS</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button
+                        id="mobile-menu-button"
+                        class="btn-icon text-white hover:bg-white/10 focus:bg-white/20"
+                        aria-label="Open mobile navigation menu"
+                        aria-expanded="false"
+                    >
+                        <div class="hamburger-icon" id="hamburger-icon">
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Full Screen Mobile Menu Overlay -->
+    <div id="mobile-menu" class="mobile-menu-overlay md:hidden">
+        <div class="mobile-menu-content">
+            <nav class="text-center space-y-6">
+                <a href="#" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Home</a>
+                <a href="#how-it-works" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">How It Works</a>
+                <a href="#plans" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Features</a>
+                <a href="mailto:hello@piggybong.com" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Contact Us</a>
+                <div class="pt-4">
+                    <a href="#plans" class="btn-large bg-white/20 border border-white/30 text-white hover:bg-white/30 focus:bg-white/40" aria-label="Download Piggy Bong iOS app">Download iOS</a>
+                </div>
+            </nav>
+        </div>
+        </div>
+    </nav>
+
+    <!-- Full Screen Mobile Menu Overlay -->
+    <div id="mobile-menu" class="mobile-menu-overlay md:hidden">
+        <div class="mobile-menu-content">
+            <nav class="text-center space-y-6">
+                <a href="#" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Home</a>
+                <a href="#how-it-works" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">How It Works</a>
+                <a href="#plans" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Features</a>
+                <a href="mailto:hello@piggybong.com" class="block text-white text-2xl font-medium hover:text-gray-100 focus:text-gray-100 transition-colors duration-200 py-3 min-h-[44px] flex items-center justify-center">Contact Us</a>
+                <div class="pt-4">
+                    <a href="#plans" class="btn-large bg-white/20 border border-white/30 text-white hover:bg-white/30 focus:bg-white/40" aria-label="Download Piggy Bong iOS app">Download iOS</a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="py-6 sm:py-10 lg:py-16 px-4 sm:px-6 lg:px-8">
+        <div class="container-responsive">
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div class="text-center lg:text-left">
+                    <h1 class="font-bold text-white mb-4">Piggy Bong</h1>
+                    <h2 class="font-medium text-white mb-6">Your K-pop Fan Tracker</h2>
+                    <p class="text-gray-300 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Piggy Bong is your smart fan companion to track spending, manage budgets, and plan goals across your favorite K-pop groups. Built by fans, for fans.
+                    </p>
+                    <div class="flex flex-col items-center lg:items-start space-y-4">
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start w-full sm:w-auto">
+                            <a href="#plans" class="btn-large btn-gradient text-white hover:opacity-90 focus:opacity-80 w-full sm:w-auto" aria-label="Get started with Piggy Bong for free">Get Started Free</a>
+                            <a href="#how-it-works" class="btn-large bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30 w-full sm:w-auto" aria-label="Learn more about how Piggy Bong works">Learn More</a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="flex justify-center mt-8 lg:mt-0">
+                    <div class="image-container w-full max-w-xs sm:max-w-sm lg:max-w-md">
+                        <!-- Skeleton Loading Placeholder -->
+                        <div id="image-skeleton" class="image-skeleton"></div>
+
+                        <!-- Error Fallback -->
+                        <div id="image-fallback" class="image-fallback">
+                            <svg class="w-16 h-16 mb-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                            <p class="text-sm font-medium">Piggy Bong</p>
+                            <p class="text-xs opacity-75">K-pop Fan Tracker</p>
+                        </div>
+
+                        <!-- Main Image -->
+                        <img
+                            id="hero-image"
+                            src="piggy-lighstick3x.png"
+                            alt="Piggy Bong App - K-pop fan tracking lightstick interface"
+                            class="hero-image w-full h-auto rounded-2xl lightstick-glow"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section - 3x2 Grid -->
+    <section id="how-it-works" class="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-8 lg:mb-12">
+                <h2 class="font-bold text-white mb-4">How It Works</h2>
+                <p class="text-gray-300 text-responsive-subtitle max-w-2xl mx-auto">Simple steps to manage your K-pop spending</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Card 1 -->
+                <div class="card-glass p-4 lg:p-6 rounded-2xl text-left">
+                    <div class="mb-4 lg:mb-6 icon-container">
+                        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M3 3v16a2 2 0 0 0 2 2h16"/>
+                            <path d="m19 9-5 5-4-4-3 3"/>
+                            <title>Chart Line Icon</title>
+                        </svg>
+                        <span class="sr-only">Set Your Priorities - Track spending data and focus on what matters most</span>
+                        <div class="icon-fallback" style="display: none;">📊</div>
+                    </div>
+                    <h3 class="font-bold text-responsive-card-title text-white mb-3 lg:mb-4">Set Your Priorities</h3>
+                    <p class="text-responsive-card-desc text-gray-300">Focus on what matters most like albums, concerts, or merch</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="card-glass p-4 lg:p-6 rounded-2xl text-left">
+                    <div class="mb-4 lg:mb-6 icon-container">
+                        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/>
+                            <path d="M20 2v4"/>
+                            <path d="M22 4h-4"/>
+                            <circle cx="4" cy="20" r="2"/>
+                            <title>AI Sparkles Icon</title>
+                        </svg>
+                        <span class="sr-only">AI-Powered Insights - Personalized recommendations based on your fandom behavior</span>
+                        <div class="icon-fallback" style="display: none;">✨</div>
+                    </div>
+                    <h3 class="font-bold text-responsive-card-title text-white mb-3 lg:mb-4">AI-Powered Insights</h3>
+                    <p class="text-responsive-card-desc text-gray-300">Personalized tips based on your fandom behavior</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="card-glass p-4 lg:p-6 rounded-2xl text-left">
+                    <div class="mb-4 lg:mb-6 icon-container">
+                        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M8 2v4"/>
+                            <path d="M16 2v4"/>
+                            <rect width="18" height="18" x="3" y="4" rx="2"/>
+                            <path d="M3 10h18"/>
+                            <title>Calendar Icon</title>
+                        </svg>
+                        <span class="sr-only">Event Reminders - Never miss comebacks, concerts, or important K-pop events</span>
+                        <div class="icon-fallback" style="display: none;">📅</div>
+                    </div>
+                    <h3 class="font-bold text-responsive-card-title text-white mb-3 lg:mb-4">Event Reminders</h3>
+                    <p class="text-responsive-card-desc text-gray-300">Never miss a comeback or concert again</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="plans" class="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
+        <div class="container-responsive max-w-4xl">
+            <div class="text-center mb-8 lg:mb-12">
+                <h2 class="font-bold text-white mb-4">Plans</h2>
+                <p class="text-gray-300 text-responsive-subtitle max-w-2xl mx-auto">Choose the perfect plan for your K-pop journey</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                <!-- Free Plan -->
+                <div class="card-glass p-4 lg:p-6 rounded-2xl flex flex-col">
+                    <h3 class="font-bold text-responsive-card-title text-white mb-2">Free Plan</h3>
+                    <p class="text-responsive-price font-bold text-white mb-6">$0<span class="text-responsive-price-suffix font-normal text-gray-300">/month</span></p>
+                    <ul class="space-y-3 mb-6 lg:mb-8 flex-grow">
+                        <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
+                            <span class="icon-container" aria-label="Feature included">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="m9 12 2 2 4-4"/>
+                                    <title>Feature included</title>
+                                </svg>
+                                <span class="sr-only">Included in Free Plan</span>
+                                <div class="icon-fallback" style="display: none;">✓</div>
+                            </span>
+                            <span>Track up to 3 artists</span>
+                        </li>
+                        <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
+                            <span class="icon-container" aria-label="Feature included">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="m9 12 2 2 4-4"/>
+                                    <title>Feature included</title>
+                                </svg>
+                                <span class="sr-only">Included in Free Plan</span>
+                                <div class="icon-fallback" style="display: none;">✓</div>
+                            </span>
+                            <span>Manual spending logs</span>
+                        </li>
+                    </ul>
+                    <button class="btn-responsive w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30" aria-label="Get started with free plan">Get Started</button>
+                </div>
+                <!-- VIP Plan -->
+                <div class="card-glass p-4 lg:p-6 rounded-2xl ring-2 ring-primary flex flex-col">
+                    <h3 class="font-bold text-responsive-card-title text-white mb-2">VIP Plan</h3>
+                    <p class="text-responsive-price font-bold text-white mb-6">$2.99<span class="text-responsive-price-suffix font-normal text-gray-300">/month</span></p>
+                    <ul class="space-y-3 mb-6 lg:mb-8 flex-grow">
+                        <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
+                            <span class="icon-container" aria-label="Feature included">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="m9 12 2 2 4-4"/>
+                                    <title>Feature included</title>
+                                </svg>
+                                <span class="sr-only">Included in VIP Plan</span>
+                                <div class="icon-fallback" style="display: none;">✓</div>
+                            </span>
+                            <span>Track up to 6 artists</span>
+                        </li>
+                        <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
+                            <span class="icon-container" aria-label="Feature included">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="m9 12 2 2 4-4"/>
+                                    <title>Feature included</title>
+                                </svg>
+                                <span class="sr-only">Included in VIP Plan</span>
+                                <div class="icon-fallback" style="display: none;">✓</div>
+                            </span>
+                            <span>Full AI insights</span>
+                        </li>
+                        <li class="text-responsive-card-desc text-gray-300 flex items-center gap-2">
+                            <span class="icon-container" aria-label="Feature included">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="m9 12 2 2 4-4"/>
+                                    <title>Feature included</title>
+                                </svg>
+                                <span class="sr-only">Included in VIP Plan</span>
+                                <div class="icon-fallback" style="display: none;">✓</div>
+                            </span>
+                            <span>Priority event alerts</span>
+                        </li>
+                    </ul>
+                    <button class="btn-responsive w-full btn-gradient text-white hover:opacity-90 focus:opacity-80" aria-label="Upgrade to VIP plan for $2.99 per month">Upgrade to VIP</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-10 lg:px-10">
+            <!-- Mobile Layout: Stacked -->
+            <div class="block lg:hidden">
+                <!-- Navigation Links -->
+                <nav class="text-center mb-8" aria-label="Footer Navigation">
+                    <div class="grid grid-cols-2 gap-y-3 gap-x-4">
+                        <a href="#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">How It Works</a>
+                        <a href="#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Plans</a>
+                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Contact</a>
+                        <a href="privacy.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Privacy Policy</a>
+                        <a href="terms.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium min-h-[44px] flex items-center justify-center">Terms of Service</a>
+                    </div>
+                </nav>
+                <!-- Download iOS Button -->
+                <div class="text-center mb-8">
+                    <a href="#plans"
+                       class="btn-responsive bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30"
+                       aria-label="Download Piggy Bong iOS app">
+                        Download iOS
+                    </a>
+                </div>
+            </div>
+
+            <!-- Desktop Layout: Left/Right -->
+            <div class="hidden lg:flex lg:items-center lg:justify-between mb-8">
+                <!-- Left: Navigation Links -->
+                <nav aria-label="Footer Navigation">
+                    <div class="flex flex-wrap gap-x-8">
+                        <a href="#how-it-works" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium">How It Works</a>
+                        <a href="#plans" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium">Plans</a>
+                        <a href="mailto:hello@piggybong.com" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium">Contact</a>
+                        <a href="privacy.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium">Privacy Policy</a>
+                        <a href="terms.html" class="text-white hover:text-purple-300 transition-colors duration-200 text-responsive-footer font-medium">Terms of Service</a>
+                    </div>
+                </nav>
+                <!-- Right: Download iOS Button -->
+                <a href="#plans"
+                   class="btn-responsive bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 focus:bg-white/30"
+                   aria-label="Download Piggy Bong iOS app">
+                    Download iOS
+                </a>
+            </div>
+
+            <!-- Copyright -->
+            <div class="text-center">
+                <p class="text-white/60 text-responsive-footer">© 2025 Piggy Bong All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu JavaScript -->
+    <script>
+        // Enhanced mobile menu functionality with full-screen overlay
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+
+            if (isMenuOpen) {
+                // Open menu
+                mobileMenu.classList.add('active');
+                hamburgerIcon.classList.add('active');
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+                mobileMenuButton.setAttribute('aria-label', 'Close mobile navigation menu');
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Close menu
+                mobileMenu.classList.remove('active');
+                hamburgerIcon.classList.remove('active');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                mobileMenuButton.setAttribute('aria-label', 'Open mobile navigation menu');
+                // Restore body scroll
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeMenu() {
+            if (isMenuOpen) {
+                isMenuOpen = false;
+                mobileMenu.classList.remove('active');
+                hamburgerIcon.classList.remove('active');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                mobileMenuButton.setAttribute('aria-label', 'Open mobile navigation menu');
+                // Restore body scroll
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Toggle menu when hamburger button is clicked
+        mobileMenuButton.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking on any navigation link
+        const mobileMenuLinks = mobileMenu.querySelectorAll('nav a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Close menu when clicking on the overlay background (outside the nav content)
+        mobileMenu.addEventListener('click', function(event) {
+            if (event.target === mobileMenu) {
+                closeMenu();
+            }
+        });
+
+        // Close menu when pressing Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && isMenuOpen) {
+                closeMenu();
+            }
+        });
+
+        // Prevent body scroll bounce on iOS when menu is open
+        mobileMenu.addEventListener('touchmove', function(event) {
+            if (isMenuOpen) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+    <!-- Hero Image Loading Script -->
+    <script>
+        // Hero image loading management
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroImage = document.getElementById('hero-image');
+            const skeleton = document.getElementById('image-skeleton');
+            const fallback = document.getElementById('image-fallback');
+
+            function showImage() {
+                // Hide skeleton and show image with fade-in
+                skeleton.classList.add('hidden');
+                heroImage.classList.add('loaded');
+
+                // Ensure fallback is hidden
+                fallback.classList.remove('show');
+            }
+
+            function showFallback() {
+                // Hide skeleton and show fallback
+                skeleton.classList.add('hidden');
+                fallback.classList.add('show');
+
+                // Log for debugging (remove in production)
+                console.log('Hero image failed to load, showing fallback');
+            }
+
+            // Check if image is already cached/loaded
+            if (heroImage.complete) {
+                if (heroImage.naturalWidth > 0) {
+                    showImage();
+                } else {
+                    showFallback();
+                }
+            } else {
+                // Set up event listeners for loading states
+                heroImage.addEventListener('load', showImage);
+                heroImage.addEventListener('error', showFallback);
+
+                // Fallback timeout in case neither event fires (shouldn't happen but safety first)
+                setTimeout(() => {
+                    if (!heroImage.classList.contains('loaded') && !fallback.classList.contains('show')) {
+                        showFallback();
+                    }
+                }, 5000); // 5 second timeout
+            }
+        });
+    </script>
+</body>
+</html>
